@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql2 | ape_li</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="视图-view 我们使用create命令来构建database,user,table(基本单位),view,索引,函数,存储过程,触发器 - 数据库的单位. 视图实际上就是一张”虚拟表”,实际上是不存在的.只是逻辑上的查询结果的集合.  视图的分类  简单视图 视图来自于单表查询的集合 - 允许执行DML操作  复杂视图 视图来自于多表关联查询的集合 - 不一定允许执行DML操作.    创建的语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql2">
+<meta property="og:url" content="https://apelisun.github.io/2022/08/09/mysql2/index.html">
+<meta property="og:site_name" content="ape_li">
+<meta property="og:description" content="视图-view 我们使用create命令来构建database,user,table(基本单位),view,索引,函数,存储过程,触发器 - 数据库的单位. 视图实际上就是一张”虚拟表”,实际上是不存在的.只是逻辑上的查询结果的集合.  视图的分类  简单视图 视图来自于单表查询的集合 - 允许执行DML操作  复杂视图 视图来自于多表关联查询的集合 - 不一定允许执行DML操作.    创建的语">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-09T13:22:58.000Z">
+<meta property="article:modified_time" content="2022-08-09T13:26:46.539Z">
+<meta property="article:author" content="ape_li">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="ape_li" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">ape_li</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+						<!-- music -->
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-mysql2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/mysql2/" class="article-date">
+  	<time datetime="2022-08-09T13:22:58.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mysql2
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="视图-view"><a href="#视图-view" class="headerlink" title="视图-view"></a>视图-view</h1><blockquote>
+<p>我们使用create命令来构建database,user,<strong>table(基本单位)</strong>,view,索引,函数,存储过程,触发器 - 数据库的单位.</p>
+<p>视图实际上就是一张”虚拟表”,实际上是不存在的.只是逻辑上的查询结果的集合.</p>
+</blockquote>
+<h2 id="视图的分类"><a href="#视图的分类" class="headerlink" title="视图的分类"></a>视图的分类</h2><blockquote>
+<ol>
+<li><p>简单视图</p>
+<p>视图来自于单表查询的集合 - 允许执行DML操作</p>
+</li>
+<li><p>复杂视图</p>
+<p>视图来自于多表关联查询的集合 - 不一定允许执行DML操作.</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="创建的语法"><a href="#创建的语法" class="headerlink" title="创建的语法"></a>创建的语法</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DROP view 视图名;</span><br><span class="line"></span><br><span class="line">CREATE VIEW 视图名</span><br><span class="line">AS</span><br><span class="line">SELECT查询语句;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create view t_acc_view as select * from t_acc;</span><br><span class="line"></span><br><span class="line">select * from t_acc_view;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>复杂视图</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">drop view co_view;</span><br><span class="line">create view co_view as</span><br><span class="line">select c.cname,o.ord_no from t_customer c join t_ord o on c.id = o.customer_id;</span><br><span class="line"></span><br><span class="line">update co_view set cname='xx'; //允许update</span><br><span class="line"></span><br><span class="line">drop view co_view;</span><br><span class="line">create view co_view as</span><br><span class="line">select customer_id,count(*) c_ from t_ord group by customer_id;</span><br><span class="line"></span><br><span class="line">-- 不允许执行update操作.</span><br><span class="line">mysql&gt; update co_view set c_=1;</span><br><span class="line">ERROR 1288 (HY000): The target table co_view of the UPDATE is not updatable</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><blockquote>
+<ol>
+<li><p>修改原表,视图肯定变化.有可能还会导致视图数据全部丢失.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">select * from t_acc where balance=16000;</span><br><span class="line"></span><br><span class="line">-- 更新原表</span><br><span class="line"></span><br><span class="line">-- 更新了这个视图来源的那个条件列.</span><br><span class="line">update t_acc set balance = balance+1000 where id=2;</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t_acc_view;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>修改视图 - 同样也会对原表造成影响.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">select * from t_acc where id=1;</span><br><span class="line"></span><br><span class="line">-- 更新视图</span><br><span class="line">update t_acc_view set balance=1000 where id=1;</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t_acc;</span><br><span class="line">+------+----------+</span><br><span class="line">| id   | balance  |</span><br><span class="line">+------+----------+</span><br><span class="line">|    1 |  1000.00 |</span><br><span class="line">|    2 | 17000.00 |</span><br><span class="line">|    3 | 15000.00 |</span><br><span class="line">+------+----------+</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>针对题1的情况,更新列可能导致视图失效.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">SELECT带where的条件查询语句 with check option</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>with check option作用:不允许更新视图的来源的那个条件列.  肯定是要配合where语句一起使用的,否则没有任何意义</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">select * from t_acc where balance=1000 with check option;</span><br><span class="line"></span><br><span class="line">mysql&gt; update t_acc_view set balance=2000 where id=1;</span><br><span class="line">ERROR 1369 (HY000): CHECK OPTION failed 'dy.t_acc_view'</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="视图的好处"><a href="#视图的好处" class="headerlink" title="视图的好处"></a>视图的好处</h2><blockquote>
+<ol>
+<li><p>封装SQL语句</p>
+<p>封装比较复杂的SQL语句,在Java中直接查询视图即可.</p>
+</li>
+<li><p>定制数据</p>
+<p>系统不同的角色 - 看到的数据应该是不一样的.</p>
+</li>
+<li><p>安全性</p>
+<p>数据库应该有多个user账号的,可以给不同的用户授予不同的视图的权限(select,insert,update,delete)</p>
+<p>授权grant</p>
+</li>
+<li><p>合并抽离出去的数据 - 对用户屏蔽的底层的数据库的结构的设计.</p>
+</li>
+</ol>
+</blockquote>
+<h1 id="索引-index"><a href="#索引-index" class="headerlink" title="索引-index"></a>索引-index</h1><blockquote>
+<p>作用:提高查询的效率,类似于书的那个目录.</p>
+</blockquote>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<ol>
+<li><p>Myisam存储引擎</p>
+<p>索引文件和数据文件是分开存储的.是俩个独立的文件</p>
+<p>数据结构:B+树</p>
+</li>
+<li><p>Innodb存储引擎</p>
+<p>数据和索引是合二为一的,是一个文件.</p>
+<p>B+树</p>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<ul>
+<li>索引也是占用物理空间的.</li>
+<li>对表中的数据进行DML操作的时候,维护索引的-消耗一点额外的时间</li>
+<li>如果表中某列重复的数据比较多,没有必要创建索引 - 查找的时候接近于全表扫描花费的时间.</li>
+<li>当表中没有指定索引列,那么默认的索引列就是主键列.</li>
+<li>show index from 表名 \G;</li>
+</ul>
+</blockquote>
+<h2 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h2><blockquote>
+<ul>
+<li><p>主键索引</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Key_name: PRIMARY</span><br><span class="line"></span><br><span class="line">-- 非要删除主键约束</span><br><span class="line">alter table 表名 drop primary key;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>唯一索引</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">某列增加unique唯一约束,自动创建唯一索引</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>全文索引</p>
+<p>后期会使用elasticsearch来进行全文搜索 - 搜索引擎.</p>
+</li>
+<li><p>复合索引 - 遵守最左匹配原则.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index index_name on 表名(列1,列2,列3);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>普通索引</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create index index_name on 表名(列);</span><br><span class="line">drop index index_name;</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</blockquote>
+<h1 id="索引失效场景※"><a href="#索引失效场景※" class="headerlink" title="索引失效场景※"></a>索引失效场景※</h1><blockquote>
+<p>如何查看索引是否生效 - 索引执行计划explain select语句;</p>
+<p>type - <em>const</em>&gt;eq_<em>ref</em>&gt;<em>ref</em>&gt;range&gt;index&gt;<em>all</em>)</p>
+<p>type-all 全表扫描 - 索引是失效的.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">explain select * from index_test where id=1;</span><br><span class="line">+----+-------------+------------+------------+-------+---------------+---------+---------+-------+------+----------+-------+</span><br><span class="line">| id | select_type | table      | partitions | type  | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+----+-------------+------------+------------+-------+---------------+---------+---------+-------+------+----------+-------+</span><br><span class="line">|  1 | SIMPLE      | index_test | NULL       | const | PRIMARY       | PRIMARY | 4       | const |    1 |   100.00 | NULL  |</span><br><span class="line">+----+-------------+------------+------------+-------+---------------+---------+---------+-------+------+----------+-------+</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">drop table index_test;</span><br><span class="line">create table index_test(</span><br><span class="line">	id int(7) primary key,</span><br><span class="line">  a int(7),</span><br><span class="line">  b int(7),</span><br><span class="line">  c varchar(20),</span><br><span class="line">  d varchar(20)</span><br><span class="line">);</span><br><span class="line">insert into index_test values(1,100,10,'aaa','AAA');</span><br><span class="line">insert into index_test values(2,200,30,'aab','BBB');</span><br><span class="line">insert into index_test values(3,300,20,'caa','CCC');</span><br><span class="line">insert into index_test values(4,100,10,'daa','DDD');</span><br><span class="line">insert into index_test values(5,500,50,'aad','FFF');</span><br><span class="line"></span><br><span class="line">drop index index_test_index;</span><br><span class="line">create index index_test_index on index_test(a,b,c);</span><br><span class="line"></span><br><span class="line">create index index_test_d on index_test(d(10));//10 - 索引长度</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="1-复合索引需要遵守最左匹配原则"><a href="#1-复合索引需要遵守最左匹配原则" class="headerlink" title="1. 复合索引需要遵守最左匹配原则"></a>1. 复合索引需要遵守最左匹配原则</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">-- a,b,c都是走了索引的.</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c='aaa';</span><br><span class="line"></span><br><span class="line">type:ref   key_len: 73</span><br><span class="line"></span><br><span class="line">-- a走了索引</span><br><span class="line">explain select * from index_test where a = 2;</span><br><span class="line">type: ref  key_len:5</span><br><span class="line"></span><br><span class="line">-- a,b都是走了索引</span><br><span class="line">explain select * from index_test where a = 2 and b=200;</span><br><span class="line">type:ref key_len:10</span><br><span class="line"></span><br><span class="line">-- b是不走的</span><br><span class="line">explain select * from index_test where b=200;</span><br><span class="line">type:ALL key_len:NULL</span><br><span class="line"></span><br><span class="line">-- type:ref   key_len: 73</span><br><span class="line">-- mysql底层发现where条件列a,b,c都是复合索引,先进行优化,a,b,c,进行查询.</span><br><span class="line">explain select * from index_test where b=200 and c='aaa' and a=2;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="2-模糊匹配"><a href="#2-模糊匹配" class="headerlink" title="2. 模糊匹配"></a>2. 模糊匹配</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- %在末尾 - 生效</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c like 'a%';</span><br><span class="line"></span><br><span class="line">-- %在开头,a,b是走索引,但是c没有走索引</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c like '%a';</span><br><span class="line"></span><br><span class="line">-- %?%,a,b是走索引,但是c没有走索引</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c like '%a%';</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="3-查询范围之后"><a href="#3-查询范围之后" class="headerlink" title="3. 查询范围之后"></a>3. 查询范围之后</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- b&gt;=10 条件成立,范围之后的索引是生效的.  a,b,c都是走索引</span><br><span class="line">explain select * from index_test where a = 100 and b&gt;=10 and c='aaa';</span><br><span class="line"></span><br><span class="line">-- b&gt;10 条件不成立,范围之后的索引是失效的.  只有a,b是走索引的</span><br><span class="line">explain select * from index_test where a = 100 and b&gt;10 and c='aaa';</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="4-索引列参加了计算"><a href="#4-索引列参加了计算" class="headerlink" title="4. 索引列参加了计算"></a>4. 索引列参加了计算</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- type:ALL</span><br><span class="line">explain select * from index_test where id+1=1;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="5-索引列使用了函数"><a href="#5-索引列使用了函数" class="headerlink" title="5. 索引列使用了函数"></a>5. 索引列使用了函数</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- type:ALL</span><br><span class="line">explain select * from index_test where abs(id)=1;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="6-查询的数据超过整张表的30"><a href="#6-查询的数据超过整张表的30" class="headerlink" title="6. 查询的数据超过整张表的30%"></a>6. 查询的数据超过整张表的30%</h2><h2 id="7-is-null和is-not-null"><a href="#7-is-null和is-not-null" class="headerlink" title="7. is null和is not null"></a>7. is null和is not null</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create index emp_index on s_emp(commission_pct);</span><br><span class="line"></span><br><span class="line">-- typ:ALL is null 没有走索引</span><br><span class="line">explain select * from s_emp where commission_pct is null;</span><br><span class="line"></span><br><span class="line">-- type:range is not 走索引.</span><br><span class="line">explain select * from s_emp where commission_pct is not null;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="8-in和not-in"><a href="#8-in和not-in" class="headerlink" title="8. in和not in"></a>8. in和not in</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">explain select * from s_emp where id in(1,2,3);</span><br><span class="line">explain select * from s_emp where id not in(1,2,3);</span><br><span class="line"></span><br><span class="line">-- mysql5.7之前</span><br><span class="line">in - 走索引</span><br><span class="line">not in - 不走索引</span><br><span class="line"></span><br><span class="line">-- 8.x not in允许走索引</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="关于索引的长度key-len"><a href="#关于索引的长度key-len" class="headerlink" title="关于索引的长度key_len"></a>关于索引的长度key_len</h1><h2 id="计算方式"><a href="#计算方式" class="headerlink" title="计算方式"></a>计算方式</h2><blockquote>
+<ol>
+<li><p>数值类型 - int</p>
+<p>4 + 1(该列是否为null,没有设置not null,就需要加1,存储null也占1个)</p>
+</li>
+<li><p>字符串类型 - varchar(n) - utf8 - n*3+2+1(没有设置not null,就需要加1,存储null也占1个)</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="索引长度作用"><a href="#索引长度作用" class="headerlink" title="索引长度作用"></a>索引长度作用</h2><blockquote>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">site: www.baidu.com</span><br><span class="line">   www.baobao.com</span><br><span class="line">   www.baxy.com</span><br><span class="line">   </span><br><span class="line">site索引长度是5,不够,前缀重复比较多.</span><br><span class="line">索引长度要有区分度.</span><br><span class="line"></span><br><span class="line">推荐反转之后进行存储.减少索引长度.</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h1 id="索引的创建策略"><a href="#索引的创建策略" class="headerlink" title="索引的创建策略"></a>索引的创建策略</h1><blockquote>
+<ul>
+<li><p>哪些列创建索引</p>
+<ul>
+<li><p>主键列,唯一性列</p>
+</li>
+<li><p>重复性比较少,经常被查询但是同时更新不是特别频繁的列.</p>
+</li>
+<li><p>order by + 排序列 - 创建索引.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">order by语句本身性能就很低下的.  根据索引进行排序.</span><br><span class="line">如果是id列索引,插入的时候就会先排序了.</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>join on 列</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用来连接表的列适合建索引的.本身join越多,性能越低.</span><br><span class="line">开发中几乎都是单表查询.尽量不要去使用复杂查询.</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</li>
+<li><p>不适合创建索引</p>
+<ul>
+<li>null值太多的列</li>
+<li>重复值太多的列</li>
+<li>更新比较频繁的列</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><blockquote>
+<ol>
+<li><p>行锁</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update s_emp set first_name='xxx' where id=1;//条件列是索引列 - 行锁 - 降低锁的粒度</span><br><span class="line"></span><br><span class="line">行锁和表锁</span><br><span class="line">1. 行锁粒度小,涉及到频繁的加锁和释放锁的过程.</span><br><span class="line">3. 表锁会影响到查询效率</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update s_emp set first_name='xxx' where id=1;//如果上面的事务没有commit,此处会阻塞</span><br><span class="line"></span><br><span class="line">如果此处更新的是另外一行,可以直接执行update s_emp set first_name='xxx' where id=2;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>表锁</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">非索引列条件更新的时候 - 锁表.</span><br><span class="line">所有的DML操作默认的申请表锁</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>页锁</p>
+<p>介于行锁和表锁之间的.</p>
+</li>
+<li><p>共享锁</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">select语句默认申请的共享锁.</span><br><span class="line">select申请排他锁.</span><br><span class="line"></span><br><span class="line">select语句 for update;</span><br><span class="line"></span><br><span class="line">实现悲观锁</span><br><span class="line"></span><br><span class="line">更新库存stock</span><br><span class="line"></span><br><span class="line">伪代码:</span><br><span class="line"></span><br><span class="line">begin;</span><br><span class="line"></span><br><span class="line">select stock from xxx where id=1 for update;</span><br><span class="line"></span><br><span class="line">//更新stock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">commit;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/08/09/mysql3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          mysql3
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/08/09/mysql1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql1</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2022 ape_li
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

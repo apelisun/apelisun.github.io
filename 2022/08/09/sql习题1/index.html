@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>sql习题1 | ape_li</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="现有一个商店的数据库，记录顾客及其购物情况，由下面三个表组成：  商品product（商品号productid  int(7)]，商品名productname [varchar(128)]，     单价unitprice int(11,2)，     商品类别category[varchar(28)]，     供应商provider [varchar(48)]）； 主键：productid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql习题1">
+<meta property="og:url" content="https://apelisun.github.io/2022/08/09/sql%E4%B9%A0%E9%A2%981/index.html">
+<meta property="og:site_name" content="ape_li">
+<meta property="og:description" content="现有一个商店的数据库，记录顾客及其购物情况，由下面三个表组成：  商品product（商品号productid  int(7)]，商品名productname [varchar(128)]，     单价unitprice int(11,2)，     商品类别category[varchar(28)]，     供应商provider [varchar(48)]）； 主键：productid">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-09T13:23:45.000Z">
+<meta property="article:modified_time" content="2022-08-09T13:27:04.209Z">
+<meta property="article:author" content="ape_li">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="ape_li" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">ape_li</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+						<!-- music -->
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-sql习题1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/sql%E4%B9%A0%E9%A2%981/" class="article-date">
+  	<time datetime="2022-08-09T13:23:45.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sql习题1
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>现有一个商店的数据库，记录顾客及其购物情况，由下面三个表组成：</p>
+<ol>
+<li>商品product（商品号productid  int(7)]，<br>商品名productname [varchar(128)]，<br>     单价unitprice int(11,2)，<br>     商品类别category[varchar(28)]，<br>     供应商provider [varchar(48)]）；<br> 主键：productid</li>
+<li>顾客customer（顾客号customerid int(7)]，<br>姓名name[varchar(48)]，<br>     住址location[varchar(128)]）；<br> 主键：customerid</li>
+<li>购买purcase（顾客号customerid，商品号productid，<br>购买数量quantity[int(7)]）；<br> 外键：customerid  引用 客户表的 customerid<br> 外键：productid	  引用 产品表的 productid<br> 主键：(customerid, productid)   –&gt; 联合主键</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><strong>任务一:使用DDL语言创建上面的表,并且设置必要的主键约束和外键约束</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">drop table product;</span><br><span class="line">create table product(</span><br><span class="line">productid int(7) primary key,</span><br><span class="line">productname varchar(128),</span><br><span class="line">unitprice double(11,2),</span><br><span class="line">catagory varchar(28),</span><br><span class="line">provider varchar(48)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">drop table customer;</span><br><span class="line">create table customer(</span><br><span class="line">customerid int(7) primary key,</span><br><span class="line">name varchar(48),</span><br><span class="line">location varchar(128)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">drop table purcase;</span><br><span class="line">create table purcase(</span><br><span class="line">customerid int(7),</span><br><span class="line">productid  int(7),</span><br><span class="line">quantity int(7),</span><br><span class="line">constraint purcase_id_pk primary key(customerid,productid),</span><br><span class="line">constraint purcase_id1_fk foreign key(productid) references product(productid),</span><br><span class="line">constraint purcase_id2_fk foreign key(customerid) references customer(customerid)   </span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">insert into product values(1,'佳洁士',8.00,'牙膏','宝洁'),(2,'高露洁',6.50,'牙膏','高露洁'),</span><br><span class="line">(3,'洁诺',5.00,'牙膏','联合利华'),</span><br><span class="line">(4,'舒肤佳',3.00,'香皂','宝洁'),</span><br><span class="line">(5,'夏士莲',5.00,'香皂','联合利华'),</span><br><span class="line">(6,'雕牌',2.50,'洗衣粉','纳爱斯'),</span><br><span class="line">(7,'中华',3.50,'牙膏','联合利华'),</span><br><span class="line">(8,'汰渍',3.00,'洗衣粉','宝洁'),</span><br><span class="line">(9,'碧浪',4.00,'洗衣粉','宝洁');</span><br><span class="line"></span><br><span class="line">insert into customer values(1,'Dennis','黄浦区'),</span><br><span class="line">(2,'John','徐家汇'),</span><br><span class="line">(3,'Tom','闸北'),</span><br><span class="line">(4,'Jenny','静安'),</span><br><span class="line">(5,'Rick','浦东');</span><br><span class="line"></span><br><span class="line">insert into purcase values(1,1,3),     </span><br><span class="line">(1,5,2),</span><br><span class="line">(1,8,2) ,   </span><br><span class="line">(2,2,5),</span><br><span class="line">(2,6,4) ,    </span><br><span class="line">(3,1,1),</span><br><span class="line">(3,5,1 ),    </span><br><span class="line">(3,6,3),</span><br><span class="line">(3,8,1 ),    </span><br><span class="line">(4,3,7),</span><br><span class="line">(4,4,3 ),    </span><br><span class="line">(5,6,2),</span><br><span class="line">(5,7,8);</span><br></pre></td></tr></tbody></table></figure>
+
+
+</blockquote>
+<blockquote>
+<p><strong>任务二: 向对应的表中插入如下数据</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">商品（1，佳洁士，8.00，牙膏，宝洁；</span><br><span class="line">   2，高露洁，6.50，牙膏，高露洁；</span><br><span class="line">   3，洁诺，5.00，牙膏，联合利华；</span><br><span class="line">   4，舒肤佳，3.00，香皂，宝洁；</span><br><span class="line">   5，夏士莲，5.00，香皂，联合利华；</span><br><span class="line">   6，雕牌，2.50，洗衣粉，纳爱斯</span><br><span class="line">   7，中华，3.50，牙膏，联合利华；</span><br><span class="line">   8，汰渍，3.00，洗衣粉，宝洁；</span><br><span class="line">   9，碧浪，4.00，洗衣粉，宝洁；）</span><br><span class="line">顾客（1，Dennis，黄浦区；</span><br><span class="line">   2，John，徐家汇；</span><br><span class="line">   3，Tom，闸北；</span><br><span class="line">   4，Jenny，静安；</span><br><span class="line">   5，Rick，浦东；） </span><br><span class="line">购买(1，1，3；     </span><br><span class="line">  1，5，2；</span><br><span class="line">  1，8，2；     </span><br><span class="line">  2，2，5；</span><br><span class="line">  2，6，4；     </span><br><span class="line">  3，1，1；</span><br><span class="line">  3，5，1；     </span><br><span class="line">  3，6，3；</span><br><span class="line">  3，8，1；     </span><br><span class="line">  4，3，7；</span><br><span class="line">  4，4，3；     </span><br><span class="line">  5，6，2；</span><br><span class="line">  5，7，8；）</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<blockquote>
+<p><strong>任务三: 完成如下语句</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">（1）求购买了供应商"宝洁"产品的所有顾客；</span><br><span class="line">select distinct c.customerid,c.name from customer c join purcase p on p.customerid=c.customerid where p.productid  in (select pr.productid from product pr where pr.provider='宝洁');</span><br><span class="line">+------------+--------+</span><br><span class="line">| customerid | name   |</span><br><span class="line">+------------+--------+</span><br><span class="line">|          1 | Dennis |</span><br><span class="line">|          3 | Tom    |</span><br><span class="line">|          4 | Jenny  |</span><br><span class="line">+------------+--------+</span><br><span class="line">（2）求购买的商品包含了顾客"Dennis"所购买的所有商品的顾客（姓名）</span><br><span class="line">select p2.customerid from purcase p2 where p2.productid in (select p.productid from customer c join purcase  p on c.customerid=p.customerid where c.name='Dennis') and customerid&lt;&gt;(select distinct p4.customerid from customer c4 join purcase p4 on p4.customerid=c4.customerid where c4.name="Dennis") group by p2.customerid having count(*)&gt;=(select count(*) from customer c2 join purcase p3  on c2.customerid=p3.customerid where c2.name='Dennis');</span><br><span class="line">+------------+</span><br><span class="line">| customerid |</span><br><span class="line">+------------+</span><br><span class="line">|          3 |</span><br><span class="line">+------------+</span><br><span class="line">（3）求牙膏卖出数量最多的供应商。</span><br><span class="line">select pr.provider,sum(pu1.quantity) from product pr join purcase pu1 on pu1.productid=pr.productid and pr.catagory='牙膏' GROUP BY pr.provider order by sum(pu1.quantity) desc limit 1;</span><br><span class="line">+--------------+-------------------+</span><br><span class="line">| provider     | sum(pu1.quantity) |</span><br><span class="line">+--------------+-------------------+</span><br><span class="line">| 联合利华     |                15 |</span><br><span class="line">+--------------+-------------------+</span><br><span class="line"></span><br><span class="line">(4)将所有的牙膏商品单价增加10%。</span><br><span class="line">update product set unitprice=unitprice*1.1 where catagory='牙膏';</span><br><span class="line"></span><br><span class="line">(5)删除从未被购买的商品记录。</span><br><span class="line">delete from product where productid  not in (select pu.productid from purcase pu);</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/08/09/B+%E6%A0%91/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          B+树
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/08/09/mysql3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql3</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2022 ape_li
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

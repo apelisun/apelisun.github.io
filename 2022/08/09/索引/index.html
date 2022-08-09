@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>索引 | ape_li</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="view create view123456789drop view student_view;create view student_view as select *from t_student where id%2&#x3D;0;-- insert into t_studentinsert into t_student values(5,&#39;java&#39;,20),(6,&#39;javab&#39;,25),(7,&#39;sad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="索引">
+<meta property="og:url" content="https://apelisun.github.io/2022/08/09/%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:site_name" content="ape_li">
+<meta property="og:description" content="view create view123456789drop view student_view;create view student_view as select *from t_student where id%2&#x3D;0;-- insert into t_studentinsert into t_student values(5,&#39;java&#39;,20),(6,&#39;javab&#39;,25),(7,&#39;sad">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://apelisun.github.io/B+.jpg">
+<meta property="og:image" content="c:/Users/liming/Desktop/jusearch.jpg">
+<meta property="og:image" content="https://apelisun.github.io/x.png">
+<meta property="og:image" content="https://apelisun.github.io/z.png">
+<meta property="article:published_time" content="2022-08-09T11:22:53.000Z">
+<meta property="article:modified_time" content="2022-08-09T11:24:22.100Z">
+<meta property="article:author" content="ape_li">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://apelisun.github.io/B+.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="ape_li" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">ape_li</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+						<!-- music -->
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-索引" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/%E7%B4%A2%E5%BC%95/" class="article-date">
+  	<time datetime="2022-08-09T11:22:53.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      索引
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="view"><a href="#view" class="headerlink" title="view"></a>view</h3><ul>
+<li><h4 id="create-view"><a href="#create-view" class="headerlink" title="create view"></a>create view</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">drop view student_view;</span><br><span class="line">create view student_view as select *from t_student where id%2=0;</span><br><span class="line"></span><br><span class="line">-- insert into t_student</span><br><span class="line">insert into t_student values(5,'java',20),(6,'javab',25),(7,'sad',20),(8,'jksd',56);</span><br><span class="line"></span><br><span class="line">-- update student_view</span><br><span class="line">update student_view set age=100 where id=8;</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><h4 id="create-complex-view"><a href="#create-complex-view" class="headerlink" title="create complex view"></a>create complex view</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">-- 有关系的两张表（fk）</span><br><span class="line">drop view student_view2;</span><br><span class="line">create view student_view2 as select s.*,sc.c_id from t_student s left join t_sc sc  on  s.id=sc.s_id;</span><br><span class="line"></span><br><span class="line">-- update view</span><br><span class="line">update student_view2 set name='as' ;</span><br><span class="line"></span><br><span class="line">ERROR 1288 (HY000): The target table student_view2 of the UPDATE is not updatable</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- 无关系的两张表</span><br><span class="line">drop table tt;</span><br><span class="line">drop table ta;</span><br><span class="line">create table tt(</span><br><span class="line"> id int(7) primary key,</span><br><span class="line">tname varchar(20)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">create table ta(</span><br><span class="line"> taid int(7) primary key,</span><br><span class="line">tt_id int(7)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">insert into tt values(1,'aa');</span><br><span class="line">insert into tt values(2,'aa');</span><br><span class="line">insert into tt values(3,'aa');</span><br><span class="line">insert into tt values(4,'aa');</span><br><span class="line"></span><br><span class="line">insert into ta values(1,1);</span><br><span class="line">insert into ta values(2,2);</span><br><span class="line">insert into ta values(3,3);</span><br><span class="line">insert into ta values(4,4);</span><br><span class="line">drop view t_view;</span><br><span class="line">create view t_view as select * from tt t join ta a on a.tt_id=t.id;</span><br><span class="line">update t_view set tname='as';</span><br><span class="line"></span><br><span class="line">create view t_view2 as select count(*)from tt t join ta a on a.tt_id=t.id;</span><br><span class="line">update t_view set count=10;</span><br><span class="line"></span><br><span class="line">视图作用：1.封装sql  2.屏蔽底层数据库结构  3.定制数据   4.安全性（grant）</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">-- function:提高查询效率</span><br><span class="line">底层：b+数  myisam（数据，索引分别存储）,innodb(数据，索引合二为一)</span><br><span class="line">-- 主键列默认索引列</span><br><span class="line">show index from 表名</span><br><span class="line"></span><br><span class="line">-- 索引分类</span><br><span class="line">1.主键索引（primary key）</span><br><span class="line">2.unique</span><br><span class="line">3.全文索引（elasticsearch）</span><br><span class="line">4.复合索引</span><br><span class="line">create index index_name on tablename(column 1,column 2)</span><br><span class="line">5.普通索引</span><br><span class="line">create index index_name on tablename(colunmn)</span><br><span class="line"></span><br><span class="line">drop table index_test;</span><br><span class="line">create table index_test(</span><br><span class="line">id int(7) primary key auto_increment,</span><br><span class="line">a int(7),</span><br><span class="line">b int(7),</span><br><span class="line">c varchar(20),</span><br><span class="line">d varchar(20)</span><br><span class="line">);</span><br><span class="line">insert into index_test values(1,2,3,'20w','cc'),(null,22,93,'2s0','dd'),(null,22,33,'w20','ss'),(null,22,53,'201','hh'),(null,72,43,'200','gg'),(null,2,3,'20i','ff');</span><br><span class="line"></span><br><span class="line">drop index t_index;</span><br><span class="line">create index t_index on index_test(a,b,c);</span><br><span class="line"></span><br><span class="line">-- jude index valid</span><br><span class="line">explain +select....</span><br><span class="line"></span><br><span class="line">explain select * from index_test where a=2 and b=3 and c='20w';(ref) len=93  </span><br><span class="line">+----+-------------+------------+------------+------+---------------+---------+---------+-------------------+------+----------+-------+</span><br><span class="line">| id | select_type | table      | partitions | type | possible_keys | key     | key_len | ref               | rows | filtered | Extra |</span><br><span class="line">+----+-------------+------------+------------+------+---------------+---------+---------+-------------------+------+----------+-------+</span><br><span class="line">|  1 | SIMPLE      | index_test | NULL       | ref  | t_index       | t_index | 93      | const,const,const |    1 |   100.00 | NULL  |</span><br><span class="line">+----+-------------+------------+------------+------+---------------+---------+---------+-------------------+------+----------+-------+</span><br><span class="line">-- 索引失效*</span><br><span class="line">1.复合索引最左匹配原则</span><br><span class="line">explain select *from index_test where b=3 and c='20w';(All len=0)</span><br><span class="line">explain select *from index_test where a=3 and b=2;(ref len=10)</span><br><span class="line">explain select *from index_test where c='sd' and a=10 and b=2;(ref len=93),调优</span><br><span class="line">2.模糊匹配</span><br><span class="line">-- %在末尾生效</span><br><span class="line">explain select * from index_test where a=1 and b=2 and c like 's%';(ref len=93)</span><br><span class="line">%在前部分生效同（%？%）</span><br><span class="line">explain select * from index_test where a=1 and b=2 and c like '%s';(ref len=10)-- a,b走索引</span><br><span class="line">3.查询范围</span><br><span class="line">explain select * from index_test where a=1 and b&gt;2 and c='21';(ref len=10)</span><br><span class="line">4.索引计算</span><br><span class="line">explain select* from index_test where id+1=1;(all)</span><br><span class="line">5.索引使用函数</span><br><span class="line">explain select* from index_test where abs(id)=1;(all)</span><br><span class="line">6.c查询数据超过百分之30（数据量足够大）</span><br><span class="line">7.is null and is not null</span><br><span class="line">(is null 不走索引，is not null 走索引)</span><br><span class="line">8.in and not in</span><br><span class="line">before 5.7 in(走索引)  not in(不走)</span><br><span class="line">after 8.0 not in ( allow index)</span><br><span class="line"></span><br><span class="line">-- 索引的创建策略</span><br><span class="line">-- fit create index</span><br><span class="line">1.primary key or unique</span><br><span class="line">2.重复性少，经常被查询，但是更新少</span><br><span class="line">3.order by 列</span><br><span class="line">4.join on 列</span><br><span class="line">-- unfit create index</span><br><span class="line">1.null值列</span><br><span class="line">2.重复列</span><br><span class="line">3.更新频繁列</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.行锁（两线程不能同时修改某一行的值）</span><br><span class="line">update XX set xx=xx where id=1;//必须是索引列，降低锁的粒度</span><br><span class="line">2.表锁（非索引列为条件更新 会触发表锁）</span><br><span class="line">所有的DML操作都会阻塞</span><br><span class="line">3.页锁（介于行锁与表锁之间）</span><br><span class="line">一页：由若干行组成的数据（B+树）</span><br><span class="line">4.共享锁（select,类似Java的读锁）</span><br><span class="line">-- select语句申请排他锁</span><br><span class="line">select stock from xxx where id=1 for update;（悲观锁：干啥都悲观，总担心有人改数据，索性给全锁了）	</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="索引底层原理"><a href="#索引底层原理" class="headerlink" title="索引底层原理"></a>索引底层原理</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">myisam(mai se meng),innoDB-----&gt;B+树</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">二叉查找树-&gt;二叉搜索树-&gt;B+树</span><br><span class="line"></span><br><span class="line">二叉查找树（失衡）--&gt;（产生）二叉平衡树（数据节点过多）-&gt;B树（储存一页数据，key和value都存）-&gt;b+树</span><br><span class="line"></span><br><span class="line">B+树</span><br><span class="line">1.非页节点存储key</span><br><span class="line">2.数据存叶子，且相对有序</span><br><span class="line">3.页与页（树节点）之间是双向链表</span><br><span class="line">4.叶子内部数据是单向链表</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h3><p>– 聚簇索引</p>
+<p><img src="/B+.jpg" alt="B+"></p>
+<h3 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">innoDB为引擎的表，表中的数据都会有主键，即使不主动声明，系统会创建一个隐式的主键.B+树的键值就是主键.这种**以主键为B+树索引而构成的B+树***索引，称为聚簇索引</span><br><span class="line"></span><br><span class="line">非聚簇索引：以其他列值构建B+树的索引</span><br><span class="line"></span><br><span class="line">-- 非聚集索引的叶子节点并不存储数据，而是存储对应的主键，因此还需要通过索引查数据，称之为回表</span><br><span class="line">（注，若所查数据为主键列，或者该列，则不需要回表）</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="C:\Users\liming\Desktop\jusearch.jpg" alt="jusearch"></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from xx where id&gt;=18 and id&lt;41;</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="非聚簇索引查找图"><a href="#非聚簇索引查找图" class="headerlink" title="非聚簇索引查找图"></a>非聚簇索引查找图</h3><p><img src="/x.png" alt="x"></p>
+<h3 id="myisam查找图"><a href="#myisam查找图" class="headerlink" title="myisam查找图"></a>myisam查找图</h3><p><img src="/z.png" alt="z"></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">key - 索引列值,value - 数据行的物理地址.</span><br><span class="line">innodb中索引和数据合并到一个文件中</span><br><span class="line"></span><br><span class="line">myisam中索引和数据是单独的俩个文件,分别是索引文件和数据文件.</span><br><span class="line"></span><br><span class="line">myisam中采用的是"非聚集的方式"</span><br><span class="line"></span><br><span class="line">无论是聚簇索引还是非聚簇索引,查找方式是一样.</span><br><span class="line"></span><br><span class="line">采用的也是B+树的结构**.只是叶节点中存储的是索引的列值以及该对应的行记录的地址.**</span><br><span class="line"></span><br><span class="line">需要再根据行记录地址到表中进行定位[回表]</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<ul>
+<li><h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">create function dy_add(a int ,b int) returns int</span><br><span class="line">	begin</span><br><span class="line">		return a+b;</span><br><span class="line">	end $$</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">select dy_add(5,2);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">delimiter $$</span><br><span class="line">create function dy_add(a int ,b int) returns int</span><br><span class="line">	begin</span><br><span class="line">		return a+b;</span><br><span class="line">	end $$</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">select dy_add(5,2);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- 触发器</span><br><span class="line">drop trigger customer_trriger;</span><br><span class="line">delimiter //</span><br><span class="line">create trigger  customer_trriger </span><br><span class="line">     before delete on s_customer </span><br><span class="line">for each row</span><br><span class="line">begin</span><br><span class="line">delete from s_ord where customer_id=old.id;</span><br><span class="line">end //</span><br><span class="line"></span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">-- 触发器</span><br><span class="line">drop trigger customer_trriger;</span><br><span class="line">delimiter //</span><br><span class="line">create trigger  customer_trriger </span><br><span class="line">     before insert on s_customer </span><br><span class="line">for each row</span><br><span class="line">begin</span><br><span class="line">	if new.id&lt;5</span><br><span class="line">		select 'error';</span><br><span class="line">end //</span><br><span class="line"></span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/08/09/mysql1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          mysql1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/08/08/mysql%E5%9B%9B%E7%A7%8D%E5%88%86%E5%8C%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql四种分区</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2022 ape_li
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

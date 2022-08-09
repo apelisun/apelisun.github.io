@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>储存函数触发器 | ape_li</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#函数function  mysql中内置了很多函数 mysql8.0不支持创建函数的语法的 解决方案:  在my.ini或者my.cnf文件下添加： [mysqld] log-bin-trust-function-creators&#x3D;1 最后mysql服务器重启    创建语法  函数体中一定有return语句  只要遇到varchar类型,必须要指定参数的长度  语法部分 12345678910">
+<meta property="og:type" content="article">
+<meta property="og:title" content="储存函数触发器">
+<meta property="og:url" content="https://apelisun.github.io/2022/08/09/%E5%82%A8%E5%AD%98%E5%87%BD%E6%95%B0%E8%A7%A6%E5%8F%91%E5%99%A8/index.html">
+<meta property="og:site_name" content="ape_li">
+<meta property="og:description" content="#函数function  mysql中内置了很多函数 mysql8.0不支持创建函数的语法的 解决方案:  在my.ini或者my.cnf文件下添加： [mysqld] log-bin-trust-function-creators&#x3D;1 最后mysql服务器重启    创建语法  函数体中一定有return语句  只要遇到varchar类型,必须要指定参数的长度  语法部分 12345678910">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-09T13:24:55.000Z">
+<meta property="article:modified_time" content="2022-08-09T13:27:21.804Z">
+<meta property="article:author" content="ape_li">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="ape_li" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+
+
+  
+<meta name="generator" content="Hexo 6.2.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+			<h1 class="header-author"><a href="/">ape_li</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+						<!-- music -->
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-储存函数触发器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/%E5%82%A8%E5%AD%98%E5%87%BD%E6%95%B0%E8%A7%A6%E5%8F%91%E5%99%A8/" class="article-date">
+  	<time datetime="2022-08-09T13:24:55.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      储存函数触发器
+      
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#函数function</p>
+<blockquote>
+<p>mysql中内置了很多函数</p>
+<p>mysql8.0不支持创建函数的语法的</p>
+<p>解决方案:</p>
+<ol>
+<li><p>在<strong>my.ini</strong>或者my.cnf文件下添加：</p>
+<p>[mysqld]</p>
+<p>log-bin-trust-function-creators=1</p>
+<p>最后mysql服务器重启</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="创建语法"><a href="#创建语法" class="headerlink" title="创建语法"></a>创建语法</h2><blockquote>
+<ol>
+<li><p>函数体中一定有return语句</p>
+</li>
+<li><p><strong>只要遇到varchar类型,必须要指定参数的长度</strong></p>
+</li>
+<li><p>语法部分</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-- 重新定制mysql的结束符号,sql语句的结束符号默认的是分号</span><br><span class="line">delimiter $$</span><br><span class="line">         </span><br><span class="line">create function 函数名([变量名 数据类型(长度)]) returns 返回类型</span><br><span class="line">begin</span><br><span class="line">	-- -- 函数体</span><br><span class="line">	return 结果;</span><br><span class="line">end $$</span><br><span class="line">         </span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><blockquote>
+<p>传入俩个整数,返回俩个整数的相加的结果</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">delimiter //</span><br><span class="line">create function dy_add(a int,b int) returns int</span><br><span class="line">begin</span><br><span class="line">	return a + b;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">-- 调用函数</span><br><span class="line">select dy_add(50,10);</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h2><blockquote>
+<p>写一个函数可以实现日期转成指定格式的字符串xxxx年xx月xx日</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">date_format(date,pattern)</span><br><span class="line"></span><br><span class="line">drop function dy_format;</span><br><span class="line"></span><br><span class="line">delimiter //</span><br><span class="line">create function dy_format(dt date) returns varchar(20)</span><br><span class="line">begin</span><br><span class="line">	return date_format(dt,'%Y年%m月%d日');</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">select dy_format(now());</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="语句语法"><a href="#语句语法" class="headerlink" title="语句语法"></a>语句语法</h2><blockquote>
+<ol>
+<li><p>while..do..end while</p>
+<p>求出1~x之间的总和</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">drop function x_add;</span><br><span class="line"></span><br><span class="line">delimiter //</span><br><span class="line">create function x_add(x int) returns int</span><br><span class="line">begin</span><br><span class="line">  -- 循环变量因子,局部变量</span><br><span class="line">	declare i int default 1;</span><br><span class="line">	-- 定义一个变量,用来保存总的和</span><br><span class="line">	declare sums int default 0;</span><br><span class="line">	while i&lt;=x do</span><br><span class="line">		-- 对已经声明过的变量进行赋值操作</span><br><span class="line">		set sums = sums + i;</span><br><span class="line">		set i = i + 1;</span><br><span class="line">	end while;</span><br><span class="line">	return sums;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">select x_add(100);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>分支语句if … then…end if</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  -- 求出1~x之间奇数的总和</span><br><span class="line">drop function ji_add;</span><br><span class="line">  delimiter //</span><br><span class="line">create function ji_add(x int) returns int</span><br><span class="line">begin</span><br><span class="line">	declare i int default 1;</span><br><span class="line">	declare sums int default 0;</span><br><span class="line">	while i&lt;=x do</span><br><span class="line">		if i%2!=0 then</span><br><span class="line">			set sums = sums+i;</span><br><span class="line">		end if;</span><br><span class="line">		set i = i + 1;</span><br><span class="line">	end while;</span><br><span class="line">	return sums;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select ji_add(100);</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><blockquote>
+<p>求出1~x之间的数字之和,但是不包括5的倍数</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">drop function my_add;</span><br><span class="line">delimiter //</span><br><span class="line">create function my_add(x int) returns int</span><br><span class="line">begin</span><br><span class="line">	-- 定义一个局部变量</span><br><span class="line">	declare i int default 1;</span><br><span class="line">	-- 定义一个全局变量,用来存储总和</span><br><span class="line">	-- 全局变量  @变量名</span><br><span class="line">	-- 系统的全局变量 @@tx_isolation</span><br><span class="line">	set @sums = 0;</span><br><span class="line">	</span><br><span class="line">	-- 对语句片段进行一个命名 - 类似于java中的continue语句</span><br><span class="line">	-- 命名是任意的</span><br><span class="line">	success:while i&lt;=x do</span><br><span class="line">	  -- mysql中判断是否相等,=</span><br><span class="line">		if i%5=0 then</span><br><span class="line">			set i = i + 1;</span><br><span class="line">			-- continue - 跳过本轮循环,继续下一轮循环</span><br><span class="line">			iterate success;</span><br><span class="line">		end if;</span><br><span class="line">		set @sums = @sums + i;</span><br><span class="line">		set i = i + 1;</span><br><span class="line">	end while;</span><br><span class="line">	return @sums;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select my_add(100);</span><br><span class="line"></span><br><span class="line">-- 全局变量,在函数体外调用</span><br><span class="line">select @sums;</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h1 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h1><blockquote>
+<p>定义:为了完成一些特定的工程,提前将sql语句<strong>预编译</strong>好,存储在在mysql-server端.并且只会编译一次.后面直接调用</p>
+<p>存储过程的时候,是不需要再次对sql语句进行编译了,提高性能.</p>
+<p><strong>存储过程可以做到标准的组件编程[把sql封装好,形成一个组件]</strong></p>
+</blockquote>
+<h2 id="sql执行的过程"><a href="#sql执行的过程" class="headerlink" title="sql执行的过程"></a>sql执行的过程</h2><blockquote>
+<ol>
+<li>mysql-client 客户端编写sql语句 mysql&gt; select * from s_emp;</li>
+<li>将这个客户端的sql发送到mysql-server端,需要对这条sql进行编译[检测语法]以及解析.</li>
+<li>mysql-server将解析之后的结果返回给mysql-client;</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>在没有使用存储过程之前,只要将sql语句发送到mysql-server端,每次都是需要对sql进行编译的.比较浪费时间.</p>
+</blockquote>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-- 删除存储过程</span><br><span class="line">drop procedure 存储过程名;</span><br><span class="line"></span><br><span class="line">-- 创建存储过程</span><br><span class="line">delimiter //</span><br><span class="line">create procedure 存储过程名([in|out] 变量名 数据类型)</span><br><span class="line">begin</span><br><span class="line">	-- 过程体</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="体验"><a href="#体验" class="headerlink" title="体验"></a>体验</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-- 把s_emp表中的员工的平均薪资预编译好在mysql-server端存储</span><br><span class="line">delimiter //</span><br><span class="line">create procedure pro_sal()</span><br><span class="line">begin</span><br><span class="line">	select avg(salary) from s_emp;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">call pro_sal();</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="in-接受参数"><a href="#in-接受参数" class="headerlink" title="in - 接受参数"></a>in - 接受参数</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop procedure in_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure in_pro(in a int)</span><br><span class="line">begin</span><br><span class="line">	-- 输出System.out.println(a)</span><br><span class="line">	-- 变量a是否有输出</span><br><span class="line">	select a;</span><br><span class="line">	</span><br><span class="line">	-- set @i = 900,但是in来修饰的</span><br><span class="line">	set a = 900;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- 直接接受一个字面量</span><br><span class="line">call in_pro(10);</span><br><span class="line">-- 接受一个全局变量</span><br><span class="line">set @a=10;</span><br><span class="line">call in_pro(@a);</span><br><span class="line">-- 10</span><br><span class="line">select @a;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="out-返回结果"><a href="#out-返回结果" class="headerlink" title="out - 返回结果"></a>out - 返回结果</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop procedure out_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure out_pro(out a int)</span><br><span class="line">begin</span><br><span class="line">	-- 输出System.out.println(a)</span><br><span class="line">	-- out修饰的 - 不能够接受外面传进来的参数</span><br><span class="line">	select a;</span><br><span class="line">	</span><br><span class="line">	-- 给a重新赋值 - set @i = 800</span><br><span class="line">	set a = 800;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">-- 注意点:如果参数使用out,那么此处是不允许直接使用字面量进行传参</span><br><span class="line">call out_pro(100);</span><br><span class="line">ERROR 1414 (42000): OUT or INOUT argument 1 for routine dy.out_pro is not a variable or NEW pseudo-variable in BEFORE trigger</span><br><span class="line"></span><br><span class="line">-- 只能使用全局变量进行传参</span><br><span class="line">set @i = 100;</span><br><span class="line">call out_pro(@i);</span><br><span class="line">-- 发现a为null</span><br><span class="line">+------+</span><br><span class="line">| a    |</span><br><span class="line">+------+</span><br><span class="line">| NULL |</span><br><span class="line">+------+</span><br><span class="line"></span><br><span class="line">select @i;</span><br><span class="line">+------+</span><br><span class="line">| @i   |</span><br><span class="line">+------+</span><br><span class="line">|  800 |</span><br><span class="line">+------+</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="练习-封装单个结果集"><a href="#练习-封装单个结果集" class="headerlink" title="练习 - 封装单个结果集"></a>练习 - 封装单个结果集</h2><h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><blockquote>
+<p>根据员工的id来返回员工的名称,薪资</p>
+<p>和表结合一起使用的话,数据类型和表统一</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop procedure find_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure find_pro(in eid int(7),out fname varchar(20),out sal float(11,2))</span><br><span class="line">begin</span><br><span class="line">	select first_name into fname from s_emp where id=eid;</span><br><span class="line">	select salary into sal from s_emp where id=eid;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">call find_pro(1,@fname,@sal);</span><br><span class="line">select @fname;</span><br><span class="line">select @sal;</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h3 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h3><blockquote>
+<p>统一赋值</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">drop procedure find_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure find_pro(in eid int(7),out fname varchar(20),out sal float(11,2))</span><br><span class="line">begin</span><br><span class="line">	select first_name,salary into fname,sal from s_emp where id=eid;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">call find_pro(1,@fname,@sal);</span><br><span class="line">select @fname;</span><br><span class="line">select @sal;</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="练习-封装多个结果集"><a href="#练习-封装多个结果集" class="headerlink" title="练习 - 封装多个结果集"></a>练习 - 封装多个结果集</h2><blockquote>
+<ol>
+<li><p>传统的做法 - 已经被弃用了 - 性能比较低 - <strong>游标</strong></p>
+</li>
+<li><p>定义第三张表来存储多个结果集</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-- 构建临时表 - 结果集</span><br><span class="line">create table emp_copy as select first_name,salary from s_emp where 1=2;</span><br><span class="line"></span><br><span class="line">drop procedure find_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure find_pro(in eid int(7))</span><br><span class="line">begin</span><br><span class="line">	insert into emp_copy(first_name,salary) select first_name,salary from s_emp where id&gt;eid;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">call find_pro(20);</span><br><span class="line">select * from emp_copy;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="练习-带事务"><a href="#练习-带事务" class="headerlink" title="练习 - 带事务"></a>练习 - 带事务</h2><blockquote>
+<p>转账功能 - 要么同时成功,要么同时失败</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">drop procedure transfer_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure transfer_pro(in sid int(7),in tid int(7),in money double(10,2),in st int(7))</span><br><span class="line">begin</span><br><span class="line">	-- 定义一个局部变量,用来展示是否转账成功</span><br><span class="line">	declare msg varchar(20) default '';</span><br><span class="line"></span><br><span class="line">-- 手动开启失败</span><br><span class="line">start transaction;</span><br><span class="line"></span><br><span class="line">-- 第一条sql</span><br><span class="line">update t_acc set balance = balance - money where id = sid;</span><br><span class="line"></span><br><span class="line">-- 故意搞事情</span><br><span class="line">if st=1 then</span><br><span class="line">	set msg = 'sorry,转账失败!';</span><br><span class="line">	-- 事务回滚</span><br><span class="line">	rollback;</span><br><span class="line">else</span><br><span class="line"> -- 第二条sql</span><br><span class="line"> update t_acc set balance = balance + money where id = tid;</span><br><span class="line"> set msg = 'good,转账成功!';</span><br><span class="line">  -- 手动提交事务</span><br><span class="line">		commit;</span><br><span class="line">end if;</span><br><span class="line">select msg;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 转账成功</span><br><span class="line">call transfer_pro(1,2,1000,2);</span><br><span class="line"></span><br><span class="line">-- 转账失败</span><br><span class="line">call transfer_pro(1,2,1000,1);</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="语句使用"><a href="#语句使用" class="headerlink" title="语句使用"></a>语句使用</h2><h3 id="条件分支语句"><a href="#条件分支语句" class="headerlink" title="条件分支语句"></a>条件分支语句</h3><blockquote>
+<ol>
+<li><p>if 条件表达式 then elseif … then … else…end if;</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">drop procedure if_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure if_pro(in a int)</span><br><span class="line">begin</span><br><span class="line">	declare msg varchar(20) default '';</span><br><span class="line">	if a&gt;=90 then</span><br><span class="line">		set msg = '优秀';</span><br><span class="line">	elseif a&gt;=80 then</span><br><span class="line">		set msg = '良好';</span><br><span class="line">	elseif a&gt;=60 then</span><br><span class="line">		set msg = '中等';</span><br><span class="line">	else</span><br><span class="line">		set msg='不及格';</span><br><span class="line">	end if;</span><br><span class="line">	select msg;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">call if_pro(85);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>case .. when 固定的值 then .. else .. end case</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">drop procedure case_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure case_pro(in a int)</span><br><span class="line">begin</span><br><span class="line">	declare msg varchar(20) default '';</span><br><span class="line">	case a</span><br><span class="line">		when 1 then</span><br><span class="line">			set msg = '1';</span><br><span class="line">		when 2 then</span><br><span class="line">			set msg = '2';</span><br><span class="line">		else</span><br><span class="line">			set msg = '3';</span><br><span class="line">	end case;</span><br><span class="line">	select msg;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">call case_pro(2);</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><blockquote>
+<ol>
+<li><p>while … do .. end while</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">drop procedure while_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure while_pro(in x int,out result int) </span><br><span class="line">begin</span><br><span class="line">	-- 定义一个局部变量  int i = 1</span><br><span class="line">	declare i int default 1;</span><br><span class="line">	-- 保存最终的总和</span><br><span class="line">	declare sums int default 0;</span><br><span class="line">	-- 循环</span><br><span class="line">	while i&lt;=x do</span><br><span class="line">		-- sums自增1</span><br><span class="line">		set sums = sums + i;</span><br><span class="line">		-- i应该要自增1</span><br><span class="line">		set i = i + 1;</span><br><span class="line">	end while;</span><br><span class="line">	-- select sums;</span><br><span class="line">	set result = sums;</span><br><span class="line">end //</span><br><span class="line"></span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">call while_pro(100,@result);</span><br><span class="line">select @result;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>loop  .. end loop - 类似于java中的while(true)</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-- 1~x</span><br><span class="line">drop procedure loop_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure loop_pro(in x int)</span><br><span class="line">begin</span><br><span class="line">	declare i int default 1;</span><br><span class="line">	declare sums int default 0;</span><br><span class="line">	</span><br><span class="line">	success:loop</span><br><span class="line">		if i&gt;x then</span><br><span class="line">			-- 打破循环的语句</span><br><span class="line">			-- iterate success;  类似于continue</span><br><span class="line">			</span><br><span class="line">			-- 类似于break</span><br><span class="line">			leave success;</span><br><span class="line">		end if;</span><br><span class="line">		set sums = sums + i;</span><br><span class="line">		set i = i + 1;</span><br><span class="line">	end loop;</span><br><span class="line">	select sums;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">call loop_pro(100);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>repeat … until … end repeat</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">drop procedure repeat_pro;</span><br><span class="line">delimiter //</span><br><span class="line">create procedure repeat_pro(in x int)</span><br><span class="line">begin</span><br><span class="line">  -- 但是先进入到这个循环体中先执行一遍,然后再进行判断</span><br><span class="line">	repeat</span><br><span class="line">		set x = x + 1;</span><br><span class="line">		select x;</span><br><span class="line">	-- 如果x&gt;0,循环停止了</span><br><span class="line">	until x&gt;0</span><br><span class="line">	end repeat;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">call repeat_pro(1);</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h1 id="存储过程和函数的区别"><a href="#存储过程和函数的区别" class="headerlink" title="存储过程和函数的区别"></a>存储过程和函数的区别</h1><blockquote>
+<ol>
+<li>定义函数的时候,在函数的签名上必须要指定returns返回类型,定义存储过程的时候不需要使用returns来指定返回类型</li>
+<li>函数体中必须要有return语句来返回函数的执行结果,但是存储过程中可以没有return语句</li>
+<li>调用函数使用select,调用存储过程使用call</li>
+<li>存储过程更加侧重于sql的封装以及sql的预编译,提高效率和安全和sql的复用性</li>
+<li>存储过程必须要使用in来接受参数,使用out来返回结果</li>
+</ol>
+</blockquote>
+<h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><p>在myql中,当我们执行一些操作的时候,比如DML操作(触发器触发的事件),一旦事件被触发,那么</p>
+<p>就会执行一段程序.<strong>触发器本质上就是一个特殊的存储过程.</strong></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>after触发器 - 在触发条件之后执行</li>
+<li>before触发器 - 在触发条件之前执行</li>
+</ul>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 删除触发器</span><br><span class="line">drop trigger 触发器名称;</span><br><span class="line">delimiter $$</span><br><span class="line">-- 创建触发器</span><br><span class="line">create trigger 触发器名</span><br><span class="line">触发时机(after,before) 触发事件(insert,delete,update) on 触发器事件所在的表名</span><br><span class="line">for each row</span><br><span class="line">-- 触发器需要执行的逻辑.</span><br><span class="line">begin</span><br><span class="line">end</span><br><span class="line">$$</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="练习-2"><a href="#练习-2" class="headerlink" title="练习"></a>练习</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table t_acc_copy as select * from t_acc where 1=2;</span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<ol>
+<li><p>删除t_acc表中的任意一条数据之后,会在t_acc_copy表中插入一条.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">drop trigger acc_tri;</span><br><span class="line">delimiter //</span><br><span class="line">create trigger acc_tri</span><br><span class="line">after delete on t_acc</span><br><span class="line">for each row</span><br><span class="line">begin</span><br><span class="line">	insert into t_acc_copy values(old.id,old.balance);</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; delete from t_acc where id=1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t_acc_copy;</span><br><span class="line">+------+---------+</span><br><span class="line">| id   | balance |</span><br><span class="line">+------+---------+</span><br><span class="line">|    1 | 1000.00 |</span><br><span class="line">+------+---------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>级联删除 - 删除t_customer中的客户信息之前需要级联删除该客户的订单信息</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">drop trigger acc_tri;</span><br><span class="line">delimiter //</span><br><span class="line">create trigger cus_tri</span><br><span class="line">before delete on t_customer</span><br><span class="line">for each row</span><br><span class="line">begin</span><br><span class="line">	delete from t_ord where customer_id=old.id;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">delete from t_customer where id=2;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li><p>oracle中支持自检约束check</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">drop table cks;</span><br><span class="line">create table cks(</span><br><span class="line">	id int(7) primary key auto_increment,</span><br><span class="line">  age int(7)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">insert into cks values(1,30);</span><br><span class="line">insert into cks values(2,30);</span><br><span class="line"></span><br><span class="line">auto_increment 主键自增长的策略,默认值是从1开始,步长为1.  主键列不需要设置值</span><br><span class="line">insert into cks(age) values(20);</span><br><span class="line">insert into cks(age) values(30);</span><br><span class="line">delete from cks where id=2;</span><br><span class="line">insert into cks(age) values(40);</span><br><span class="line">select * from cks;</span><br><span class="line"></span><br><span class="line">-- auto_increment - 主键列数据类型不能是varchar</span><br><span class="line">-- auto_increment到达最大值</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li><p>mysql用触发器来实现自检约束</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-- 插入age只能在(0,18]区间,否则报错.</span><br><span class="line">drop trigger cks_tri;</span><br><span class="line">delimiter //</span><br><span class="line">create trigger cks_tri</span><br><span class="line">before insert on cks</span><br><span class="line">for each row</span><br><span class="line">begin</span><br><span class="line">	if new.age&lt;0 or new.age&gt;18 then</span><br><span class="line">		signal sqlstate '42000' set message_text='age必须在0~18区间';</span><br><span class="line">	end if;</span><br><span class="line">end //</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br><span class="line">insert into cks(age) values(200);</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/08/09/B+%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">B+树</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2022 ape_li
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
+        </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
