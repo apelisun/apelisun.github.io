@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-
-<html lang="zh-CN">
-
+<html>
 <head>
-    
-    <title>mysql3 - ape_li</title>
-    <meta charset="UTF-8">
-    <meta name="keywords" content="null">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-    
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <meta name="description" content="DB设计 指导db设计的思想,避免表中出现大量的冗余的数据.但是实际开发中表中是允许出现冗余的字段的. 冗余数据的好处 - 安全,方便查询.坏处-&gt;delete和update操作    1NF - 第一范式-保证列的原子性,保证列不可再切割 s_emp(id,name) - 发现name不具备原子性,可以被再次切割(fist_name,last_name) s_ord(id,address)">
+  <meta charset="utf-8">
+  
+  <title>mysql3 | ape_li</title>
+
+  <!-- keywords -->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DB设计 指导db设计的思想,避免表中出现大量的冗余的数据.但是实际开发中表中是允许出现冗余的字段的. 冗余数据的好处 - 安全,方便查询.坏处-&gt;delete和update操作    1NF - 第一范式-保证列的原子性,保证列不可再切割 s_emp(id,name) - 发现name不具备原子性,可以被再次切割(fist_name,last_name) s_ord(id,address)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql3">
 <meta property="og:url" content="https://apelisun.github.io/2022/08/09/mysql3/index.html">
@@ -28,328 +27,178 @@
 <meta property="article:tag" content="meet DB">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="c:/Users/liming/Desktop/zang.png">
-    
-<link rel="stylesheet" href="lib/fancybox/fancybox.css">
-<link rel="stylesheet" href="lib/justifiedGallery/justifiedGallery.min.css">
-<link rel="stylesheet" href="lib/mdui_043tiny/mdui.css">
+  
+    <link rel="alternative" href="/atom.xml" title="ape_li" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+
+  
+<script src="//cdn.bootcss.com/require.js/2.3.2/require.min.js"></script>
+
+  
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 
 
-    <link rel="stylesheet" href="../../../../lib/iconfont/iconfont.css?v=1660125027000">
-    
-    <link rel="stylesheet" href="../../../../css/style.css?v=1660125027000">
-
-    
-        
-            <link rel="stylesheet" href="../../../../custom.css?v=1660125027000">
-        
-    
+  
 <meta name="generator" content="Hexo 6.2.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="atom.xml" title="ape_li" type="application/atom+xml">
 </head>
+<body>
+  <div id="container">
+    <div id="particles-js"></div>
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			
+		</a>
 
-<body class="mdui-drawer-body-left">
-    <div id="nexmoe-background">
-        <div class="nexmoe-bg" style="background-image: url(https://i.dawnlab.me/b5a7e61560facdd5b8aa9683fce147d7.png)"></div>
-        <div class="mdui-appbar mdui-shadow-0">
-            <div class="mdui-toolbar">
-                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
-                <div class="mdui-toolbar-spacer"></div>
-                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
-                <a href="../../../../index.html" title="ape_li" class="mdui-btn mdui-btn-icon"><img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="ape_li"></a>
-            </div>
-        </div>
-    </div>
-    <div id="nexmoe-header">
-        <div class="nexmoe-drawer mdui-drawer" id="drawer">
-    <div class="nexmoe-avatar mdui-ripple">
-        <a href="../../../../index.html" title="ape_li">
-            <img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="ape_li" alt="ape_li">
-        </a>
-    </div>
-    <div class="nexmoe-count">
-        <div><span>文章</span>10</div>
-        <div><span>标签</span>13</div>
-        <div><span>分类</span>0</div>
-    </div>
-    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="../../../../index.html" title="回到首页">
-            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
-            <div class="mdui-list-item-content">
-                回到首页
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="../../../../archive.html" title="文章归档">
-            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
-            <div class="mdui-list-item-content">
-                文章归档
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="../../../../PY.html" title="我的朋友">
-            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
-            <div class="mdui-list-item-content">
-                我的朋友
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="../../../../donate.html" title="给我赞助">
-            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
-            <div class="mdui-list-item-content">
-                给我赞助
-            </div>
-        </a>
-        
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="../../../../about.html" title="关于博主">
-            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
-            <div class="mdui-list-item-content">
-                关于博主
-            </div>
-        </a>
-        
-    </div>
-    <aside id="nexmoe-sidebar">
-    
-        
-        <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-search">
-         
-            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
-                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
-            </form>
-         
-    </div>
+		<hgroup>
+			<h1 class="header-author"><a href="/">ape_li</a></h1>
+		</hgroup>
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">目录</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="half-header-menu">
+						<a class="hide">Home</a>
+						<a>Tags</a>
+						<a>Links</a>
+						<a>About</a>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+						<!-- music -->
+						
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/B-%E6%A0%91/" style="font-size: 10px;">B+树</a> <a href="/tags/area/" style="font-size: 10px;">area</a> <a href="/tags/collection/" style="font-size: 10px;">collection</a> <a href="/tags/homework/" style="font-size: 10px;">homework</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/interview/" style="font-size: 10px;">interview</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/meet-DB/" style="font-size: 10px;">meet DB</a> <a href="/tags/msql/" style="font-size: 10px;">msql</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/procedure/" style="font-size: 10px;">procedure</a> <a href="/tags/view/" style="font-size: 10px;">view</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据库基础</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/">github</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">I&#39;m a developer.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
 </div>
-
-
-
-
-    
-        
-        <div class="nexmoe-widget-wrap">
-	<div class="nexmoe-widget nexmoe-social">
-		<a
-			class="mdui-ripple"
-			href="https://jq.qq.com/?_wv=1027&k=5CfKHun"
-			target="_blank"
-			mdui-tooltip="{content: 'QQ群'}"
-			style="
-				color: rgb(249, 174, 8);
-				background-color: rgba(249, 174, 8, .1);
-			"
-		>
-			<i
-				class="nexmoefont icon-QQ"
-			></i> </a
-		><a
-			class="mdui-ripple"
-			href="https://space.bilibili.com/20238211"
-			target="_blank"
-			mdui-tooltip="{content: '哔哩哔哩'}"
-			style="
-				color: rgb(231, 106, 141);
-				background-color: rgba(231, 106, 141, .1);
-			"
-		>
-			<i
-				class="nexmoefont icon-bilibili"
-			></i> </a
-		><a
-			class="mdui-ripple"
-			href="https://github.com/nexmoe/"
-			target="_blank"
-			mdui-tooltip="{content: 'GitHub'}"
-			style="
-				color: rgb(25, 23, 23);
-				background-color: rgba(25, 23, 23, .1);
-			"
-		>
-			<i
-				class="nexmoefont icon-github"
-			></i> </a
-		><a
-			class="mdui-ripple"
-			href="https://www.zhihu.com/people/nexmoe"
-			target="_blank"
-			mdui-tooltip="{content: '知乎'}"
-			style="
-				color: rgb(30, 136, 229);
-				background-color: rgba(30, 136, 229, .1);
-			"
-		>
-			<i
-				class="nexmoefont icon-zhihu"
-			></i> </a
-		><a
-			class="mdui-ripple"
-			href="https://twitter.com/nexmoe"
-			target="_blank"
-			mdui-tooltip="{content: 'Twitter'}"
-			style="
-				color: rgb(59, 151, 239);
-				background-color: rgba(59, 151, 239, .1);
-			"
-		>
-			<i
-				class="nexmoefont icon-twitter"
-			></i> </a
-		><a
-			class="mdui-ripple"
-			href="https://nexmoe.com/atom.xml"
-			target="_blank"
-			mdui-tooltip="{content: 'RSS'}"
-			style="
-				color: rgb(247, 132, 34);
-				background-color: rgba(247, 132, 34, .1);
-			"
-		>
-			<i
-				class="nexmoefont icon-rss"
-			></i> </a
-		>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide"></h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/img/header.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author"></h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">目录</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
 	</div>
-</div>
-
-    
-        
-        
-
-    
-        
-        
-  <div class="nexmoe-widget-wrap">
-    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
-      <a href="../../../../tags/B-%E6%A0%91/" style="font-size: 10px;">B+树</a> <a href="../../../../tags/area/" style="font-size: 10px;">area</a> <a href="../../../../tags/collection/" style="font-size: 10px;">collection</a> <a href="../../../../tags/homework/" style="font-size: 10px;">homework</a> <a href="../../../../tags/index/" style="font-size: 10px;">index</a> <a href="../../../../tags/interview/" style="font-size: 10px;">interview</a> <a href="../../../../tags/java/" style="font-size: 10px;">java</a> <a href="../../../../tags/meet-DB/" style="font-size: 10px;">meet DB</a> <a href="../../../../tags/msql/" style="font-size: 10px;">msql</a> <a href="../../../../tags/mysql/" style="font-size: 20px;">mysql</a> <a href="../../../../tags/procedure/" style="font-size: 10px;">procedure</a> <a href="../../../../tags/view/" style="font-size: 10px;">view</a> <a href="../../../../tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据库基础</a>
+</nav>
+      <div class="body-wrap"><article id="post-mysql3" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/mysql3/" class="article-date">
+  	<time datetime="2022-08-09T13:23:13.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
     </div>
+  
+  <div class="article-inner">
     
-      <script>
-        var maxTagcloud = parseInt(17);
-        var tags_length = parseInt(13);
-        var tags_arr = [];
-        for(var i = 0; i < tags_length; i++){
-          tags_arr.push(i);
-        }
-        tags_arr.sort(function (l, r) {
-          return Math.random() > 0.5 ? -1 : 1;
-        });
-        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
-        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
-          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
-        }
-      </script>
+      <input type="hidden" class="isFancy" />
     
-  </div>
-
     
+      <header class="article-header">
         
-        
-        
-  <div class="nexmoe-widget-wrap">
-    <h3 class="nexmoe-widget-title">文章归档</h3>
-    <div class="nexmoe-widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../../../archives/2022/">2022</a><span class="archive-list-count">10</span></li></ul>
-    </div>
-  </div>
-
-
-
-    
-        
-        
-  <div class="nexmoe-widget-wrap">
-    <h3 class="nexmoe-widget-title">最新文章</h3>
-    <div class="nexmoe-widget">
-      <ul>
-        
-          <li>
-            <a href="../%E5%82%A8%E5%AD%98%E5%87%BD%E6%95%B0%E8%A7%A6%E5%8F%91%E5%99%A8/">储存函数触发器</a>
-          </li>
-        
-          <li>
-            <a href="../B+%E6%A0%91/">B+树</a>
-          </li>
-        
-          <li>
-            <a href="../sql%E4%B9%A0%E9%A2%981/">sql习题1</a>
-          </li>
-        
-          <li>
-            <a href="">mysql3</a>
-          </li>
-        
-          <li>
-            <a href="../mysql2/">mysql2</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-    
-        
-        <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-link">
-		<ul>
-        
-            <li>
-                <a href="https://xiaoshu.app/" target="_blank" >
-                    <img src="https://xsm.nexmoe.com/images/Infinite/Snipaste_2022-05-18_20-46-50.png" alt="小舒同学"></img>
-                    <p>小舒同学</p>
-                </a>
-            </li>
-        
-            <li>
-                <a href="https://nexmoe.com/" target="_blank" >
-                    <img src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/avatar.png" alt="折影轻梦"></img>
-                    <p>折影轻梦</p>
-                </a>
-            </li>
-        
-		</ul>
-    </div>
-</div>
-<style>
-.nexmoe-widget-wrap .nexmoe-link ul li a {
-    text-align : center;
-}
-.nexmoe-widget-wrap .nexmoe-link ul li a img {
-    max-width : 100%;
-}
-.nexmoe-widget-wrap .nexmoe-link ul li a p {
-    margin: 10px 0;
-}
-</style>
-
-    
-</aside>
-    <div class="nexmoe-copyright">
-        &copy; 2022 ape_li
-        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
-        <br><a target="_blank" href="https://beian.miit.gov.cn/">鄂ICP备2020018486号</a> <br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"> <img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
-    </div>
-</div><!-- .nexmoe-drawer -->
-    </div>
-    <div id="nexmoe-content">
-        <div class="nexmoe-primary">
-            <div class="nexmoe-post">
-
-  <article>
+  
+    <h1 class="article-title" itemprop="name">
+      mysql3
       
-          <div class="nexmoe-post-cover" style="padding-bottom: 56.71874999999999%;"> 
-              <img data-fancybox="gallery" src="https://i.dawnlab.me/b5a7e61560facdd5b8aa9683fce147d7.png" alt="mysql3" loading="lazy">
-              <h1>mysql3</h1>
-          </div>
-      
-      
-      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
-    <a><i class="nexmoefont icon-calendar-fill"></i>2022年08月09日</a>
-</div>
-      
+    </h1>
+  
 
-      <h1 id="DB设计"><a href="#DB设计" class="headerlink" title="DB设计"></a>DB设计</h1><blockquote>
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/meet-DB/" rel="tag">meet DB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+	</div>
+
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DB设计"><a href="#DB设计" class="headerlink" title="DB设计"></a>DB设计</h1><blockquote>
 <p>指导db设计的思想,避免表中出现大量的冗余的数据.但是实际开发中表中是允许出现冗余的字段的.</p>
 <p>冗余数据的好处 - 安全,方便查询.坏处-&gt;delete和update操作</p>
 </blockquote>
@@ -805,96 +654,79 @@
 </tr>
 </tbody></table>
 
-      <p><img data-fancybox="gallery" src="https://i.dawnlab.me/53a8c7cf3ad77a0f0a456ce2c6afe88a.png"  alt="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" data-caption="53a8c7cf3ad77a0f0a456ce2c6afe88a.png" loading="lazy"></p>
-  </article>
-
-  
       
-    <div class="nexmoe-post-copyright">
-        <strong>本文作者：</strong>ape_li<br>
-        <strong>本文链接：</strong><a href="https://apelisun.github.io/2022/08/09/mysql3/" title="https:&#x2F;&#x2F;apelisun.github.io&#x2F;2022&#x2F;08&#x2F;09&#x2F;mysql3&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;apelisun.github.io&#x2F;2022&#x2F;08&#x2F;09&#x2F;mysql3&#x2F;</a><br>
-        
-            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
-        
     </div>
-
-
-  
-  
-  <div class="nexmoe-post-meta nexmoe-rainbow">
     
-    
-        <a class="nexmoefont icon-tag-fill -none-link" href="../../../../tags/meet-DB/" rel="tag">meet DB</a> <a class="nexmoefont icon-tag-fill -none-link" href="../../../../tags/mysql/" rel="tag">mysql</a>
-    
-</div>
-
+  </div>
   
-      <div class="nexmoe-post-footer">
-          请在你的配置文件中设置评论框插槽
+    
+<nav id="article-nav">
+  
+    <a href="/2022/08/09/sql%E4%B9%A0%E9%A2%981/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">&lt;</strong>
+      <div class="article-nav-title">
+        
+          sql习题1
+        
       </div>
+    </a>
   
+  
+    <a href="/2022/08/09/mysql2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mysql2</div>
+      <strong class="article-nav-caption">&gt;</strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
 </div>
-            <div class="nexmoe-post-right">
-              <div class="nexmoe-fixed">
-                  <div class="nexmoe-tool"> 
-                    
-                      
-                        
-                          
-                          
-                              <button class="mdui-fab catalog" style="overflow:unset;">
-                                  <i class="nexmoefont icon-i-catalog"></i>
-                                  <div class="nexmoe-toc">
-                                      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DB%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">DB设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-number">1.1.</span> <span class="toc-text">练习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DDL%E8%AF%AD%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">DDL语言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">约束类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8%E8%AF%AD%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">创建表语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E7%BA%A7%E6%B7%BB%E5%8A%A0%E6%96%B9%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">列级添加方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E7%BA%A7%E6%B7%BB%E5%8A%A0%E6%96%B9%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">表级添加方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E7%9A%84%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95"><span class="toc-number">3.3.</span> <span class="toc-text">建表的其他语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AD%A6%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">3.4.</span> <span class="toc-text">自学的知识点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DML%E6%93%8D%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">DML操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#insert%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.1.</span> <span class="toc-text">insert语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#delete%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.2.</span> <span class="toc-text">delete语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#update%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.3.</span> <span class="toc-text">update语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#truncate%E5%92%8Cdelete%E5%92%8Cdrop"><span class="toc-number">4.4.</span> <span class="toc-text">truncate和delete和drop</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E9%A1%B5"><span class="toc-number">5.</span> <span class="toc-text">分页</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E7%9A%84%E5%85%AC%E5%BC%8F"><span class="toc-number">5.1.</span> <span class="toc-text">分页的公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%95%88%E7%8E%87%E9%97%AE%E9%A2%98"><span class="toc-number">5.2.</span> <span class="toc-text">分页的查询效率问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">6.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1ACID%E7%89%B9%E6%80%A7"><span class="toc-number">6.1.</span> <span class="toc-text">事务ACID特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">6.2.</span> <span class="toc-text">事务的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">6.3.</span> <span class="toc-text">事务的隔离级别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%BD%93%E5%89%8D%E4%BC%9A%E8%AF%9D%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">6.4.</span> <span class="toc-text">查询当前会话的隔离级别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1TCL%E5%91%BD%E4%BB%A4"><span class="toc-number">7.</span> <span class="toc-text">事务TCL命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E4%B8%80%E7%82%B9"><span class="toc-number">7.1.</span> <span class="toc-text">补充一点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E4%BA%8B%E5%8A%A1%E5%B9%B6%E5%8F%91%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">多事务并发带来的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%8F%E8%AF%BB"><span class="toc-number">8.1.</span> <span class="toc-text">脏读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB"><span class="toc-number">8.2.</span> <span class="toc-text">不可重复读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BB%E8%AF%BB"><span class="toc-number">8.3.</span> <span class="toc-text">幻读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB"><span class="toc-number">8.4.</span> <span class="toc-text">可重复读</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
-                                  </div>
-                              </button>
-                          
-                          
-                      
-                    
-                      <a href="#nexmoe-content" class="toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
-                  </div>
-              </div>
-            </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+      <div class="footer-left">
+        &copy; 2022 ape_li
+      </div>
+        <div class="footer-right">
+          <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/preccrep/hexo-theme-jelly" target="_blank">Jelly</a>
         </div>
     </div>
-    <div id="nexmoe-search-space">
-	<div class="search-container">
-		<div class="search-header">
-			<div class="search-input-container">
-				<input
-					class="search-input"
-					type="text"
-					placeholder="搜索"
-					oninput="sinput();"
-				/>
-			</div>
-			<a class="search-close" onclick="sclose();">×</a>
-		</div>
-		<div class="search-body"></div>
-	</div>
-</div>
-
+  </div>
+</footer>
+    </div>
     
-<script src="lib/mdui_043tiny/mdui.js"></script>
-<script src="lib/jquery.min.js"></script>
-<script src="lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
-<script src="lib/fancybox/fancybox.umd.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
- 
-
-<script async src="../../../../js/app.js?v=1660125027021"></script>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
 
 <script>
-	$(".justified-gallery").justifiedGallery({
-		rowHeight: 160,
-		margins: 10,
-	});
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
 </script>
 
+<script src="/js/main.js"></script>
+
+
+
+
+  </div>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         tex2jax: {
@@ -911,5 +743,4 @@
 </script>
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
-
 </html>
