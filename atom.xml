@@ -6,7 +6,7 @@
   <link href="https://apelisun.github.io/atom.xml" rel="self"/>
   
   <link href="https://apelisun.github.io/"/>
-  <updated>2022-08-10T03:52:49.694Z</updated>
+  <updated>2022-08-10T11:42:54.791Z</updated>
   <id>https://apelisun.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>innoDB_and_myisam</title>
+    <link href="https://apelisun.github.io/2022/08/10/innoDB-and-myisam/"/>
+    <id>https://apelisun.github.io/2022/08/10/innoDB-and-myisam/</id>
+    <published>2022-08-10T11:42:19.000Z</published>
+    <updated>2022-08-10T11:42:54.791Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="innoDB与Myisam的区别"><a href="#innoDB与Myisam的区别" class="headerlink" title="innoDB与Myisam的区别"></a>innoDB与Myisam的区别</h3><ul><li><p><strong>InnoDB支持事务，MyISAM不支持</strong>，对于InnoDB每一条SQL语言都默认封装成事务，自动提交，这样会<strong>影响速度</strong>，所以最好把多条SQL语言放在begin和commit之间，组成一个事务；</p></li><li><p><strong>InnoDB支持外键，而MyISAM不支持</strong>。对一个包含外键的InnoDB表转为MYISAM会<strong>失败</strong>；</p></li><li><ul><li><p>3**.InnoDB是聚集索引<strong>，使用B+Tree作为索引结构，数据文件是和（主键）索引绑在一起的（表数据文件本身就是按B+Tree组织的一个索引结构），必须要有主键，通过主键索引效率很高。但是</strong>辅助索引需要两次查询<strong>，先查询到主键，然后再通过主键查询到数据。因此，</strong>主键不应该过大，因为主键太大**，其他索引也都会-很大。</p></li><li><p>3.<strong>MyISAM是非聚集索引</strong>，也是使用B+Tree作为索引结构，<strong>索引和数据文件是分离的，</strong>索引保存的是数据文件的指针。<strong>主键索引和辅助索引是独立的</strong>。也就是说：InnoDB的B+树主键索引的叶子节点就是数据文件，辅助索引的叶子节点是主键的值；而MyISAM的B+树主键索引和辅助索引的叶子节点<strong>都是数据文件的地址指针</strong>。</p></li></ul></li><li><ol start="4"><li><strong>InnoDB不保存表的具体行数</strong>，执行select count(*) from table时需要全表扫描。<strong>而MyISAM用一个变量保存了整个表的行数</strong>，执行上述语句时只需要读出该变量即可，速度很快（注意不能加有任何WHERE条件）</li></ol></li><li><ol start="5"><li><strong>Innodb不支持全文索引，而MyISAM支持全文索引</strong>，在涉及全文索引领域的查询效率上MyISAM速度更快高；PS：<strong>5.7以后的InnoDB支持全文索引了</strong>**</li></ol></li><li><ol start="6"><li>MyISAM表格可以被<strong>压缩后进行查询操作</strong></li></ol></li><li><p><strong>7. InnoDB支持表、行(默认)级锁，而MyISAM支持表级锁</strong></p></li><li><p>8、<strong>InnoDB表必须有唯一索引</strong>（如主键）（用户没有指定的话会自己找/生产一个隐藏列Row_id来充当默认主键），<strong>而Myisam可以没有</strong></p><p>9、Innodb存储文件有frm、ibd，而Myisam是frm、MYD、MYI</p><pre><code>    Innodb：frm是表定义文件，ibd是数据文件    Myisam：frm是表定义文件，myd是数据文件，myi是索引文件</code></pre></li></ul><h3 id="如何选择："><a href="#如何选择：" class="headerlink" title="如何选择："></a>如何选择：</h3><p>​    1. 是否要支持事务，如果要请选择innodb，如果不需要可以考虑MyISAM；</p><ol start="2"><li><p>如果表中绝大多数都只是读查询，可以考虑MyISAM，如果既有读也有写，请使用InnoDB。</p></li><li><p>系统奔溃后，MyISAM恢复起来更困难，能否接受；</p></li><li><p>MySQL5.5版本开始Innodb已经成为Mysql的默认引擎(之前是MyISAM)，说明其优势是有目共睹的，如果你不知道用什么，那就用InnoDB，至少不会差</p></li></ol><p>InnoDB为什么推荐使用自增ID作为主键？</p><p>​答：自增ID可以保证每次插入时B+索引是从右边扩展的，可以避免B+树和频繁合并和分裂（对比使用UUID）。如果使用字符串主键和随机主键，会使得数据随机插入，效率比较差。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;innoDB与Myisam的区别&quot;&gt;&lt;a href=&quot;#innoDB与Myisam的区别&quot; class=&quot;headerlink&quot; title=&quot;innoDB与Myisam的区别&quot;&gt;&lt;/a&gt;innoDB与Myisam的区别&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;stro</summary>
+      
+    
+    
+    
+    
+    <category term="mysql" scheme="https://apelisun.github.io/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>储存函数触发器</title>

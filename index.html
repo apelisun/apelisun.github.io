@@ -150,6 +150,109 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-innoDB-and-myisam" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/10/innoDB-and-myisam/" class="article-date">
+  	<time datetime="2022-08-10T11:42:19.000Z" itemprop="datePublished">2022-08-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/08/10/innoDB-and-myisam/">
+        innoDB_and_myisam
+        
+      </a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="innoDB与Myisam的区别"><a href="#innoDB与Myisam的区别" class="headerlink" title="innoDB与Myisam的区别"></a>innoDB与Myisam的区别</h3><ul>
+<li><p><strong>InnoDB支持事务，MyISAM不支持</strong>，对于InnoDB每一条SQL语言都默认封装成事务，自动提交，这样会<strong>影响速度</strong>，所以最好把多条SQL语言放在begin和commit之间，组成一个事务；</p>
+</li>
+<li><p><strong>InnoDB支持外键，而MyISAM不支持</strong>。对一个包含外键的InnoDB表转为MYISAM会<strong>失败</strong>；</p>
+</li>
+<li><ul>
+<li><p>3**.InnoDB是聚集索引<strong>，使用B+Tree作为索引结构，数据文件是和（主键）索引绑在一起的（表数据文件本身就是按B+Tree组织的一个索引结构），必须要有主键，通过主键索引效率很高。但是</strong>辅助索引需要两次查询<strong>，先查询到主键，然后再通过主键查询到数据。因此，</strong>主键不应该过大，因为主键太大**，其他索引也都会-很大。</p>
+</li>
+<li><p>3.<strong>MyISAM是非聚集索引</strong>，也是使用B+Tree作为索引结构，<strong>索引和数据文件是分离的，</strong>索引保存的是数据文件的指针。<strong>主键索引和辅助索引是独立的</strong>。也就是说：InnoDB的B+树主键索引的叶子节点就是数据文件，辅助索引的叶子节点是主键的值；而MyISAM的B+树主键索引和辅助索引的叶子节点<strong>都是数据文件的地址指针</strong>。</p>
+</li>
+</ul>
+</li>
+<li><ol start="4">
+<li><strong>InnoDB不保存表的具体行数</strong>，执行select count(*) from table时需要全表扫描。<strong>而MyISAM用一个变量保存了整个表的行数</strong>，执行上述语句时只需要读出该变量即可，速度很快（注意不能加有任何WHERE条件）</li>
+</ol>
+</li>
+<li><ol start="5">
+<li><strong>Innodb不支持全文索引，而MyISAM支持全文索引</strong>，在涉及全文索引领域的查询效率上MyISAM速度更快高；PS：<strong>5.7以后的InnoDB支持全文索引了</strong>**</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>MyISAM表格可以被<strong>压缩后进行查询操作</strong></li>
+</ol>
+</li>
+<li><p><strong>7. InnoDB支持表、行(默认)级锁，而MyISAM支持表级锁</strong></p>
+</li>
+<li><p>8、<strong>InnoDB表必须有唯一索引</strong>（如主键）（用户没有指定的话会自己找/生产一个隐藏列Row_id来充当默认主键），<strong>而Myisam可以没有</strong></p>
+<p>9、Innodb存储文件有frm、ibd，而Myisam是frm、MYD、MYI</p>
+<pre><code>    Innodb：frm是表定义文件，ibd是数据文件
+
+    Myisam：frm是表定义文件，myd是数据文件，myi是索引文件
+</code></pre>
+</li>
+</ul>
+<h3 id="如何选择："><a href="#如何选择：" class="headerlink" title="如何选择："></a>如何选择：</h3><p>​    1. 是否要支持事务，如果要请选择innodb，如果不需要可以考虑MyISAM；</p>
+<ol start="2">
+<li><p>如果表中绝大多数都只是读查询，可以考虑MyISAM，如果既有读也有写，请使用InnoDB。</p>
+</li>
+<li><p>系统奔溃后，MyISAM恢复起来更困难，能否接受；</p>
+</li>
+<li><p>MySQL5.5版本开始Innodb已经成为Mysql的默认引擎(之前是MyISAM)，说明其优势是有目共睹的，如果你不知道用什么，那就用InnoDB，至少不会差</p>
+</li>
+</ol>
+<p>InnoDB为什么推荐使用自增ID作为主键？</p>
+<p>​		答：自增ID可以保证每次插入时B+索引是从右边扩展的，可以避免B+树和频繁合并和分裂（对比使用UUID）。如果使用字符串主键和随机主键，会使得数据随机插入，效率比较差。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+      
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-储存函数触发器" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -2660,211 +2763,10 @@
 
 
   
-    <article id="post-sql常用查询‘" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2022/08/08/sql%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E2%80%98/" class="article-date">
-  	<time datetime="2022-08-08T00:30:09.000Z" itemprop="datePublished">2022-08-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/08/08/sql%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E2%80%98/">
-        sql常用查询‘
-        
-      </a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SQL查询练习"><a href="#SQL查询练习" class="headerlink" title="SQL查询练习"></a>SQL查询练习</h1><blockquote>
-<ol>
-<li><p><strong>查询id=1课程比id=2课程成绩高的学生的信息[学生id和学生的姓名]及课程分数</strong></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,sc1.score from student s join sc sc1 on s.id=sc1.sid join sc sc2 on sc1.sid=sc2.sid where sc1.cid=1 and sc2.cid=2 and sc1.score &gt;sc2.score; </span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询同时存在1 课程和2课程的情况</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,sc1.score from student s join sc sc1 on s.id=sc1.sid join sc sc2 on sc1.sid=sc2.sid where  sc2.cid =2 and sc1.cid=1 ;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询存在1 课程但可能不存在2课程的情况</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,sc1.score from student s join sc sc1 on s.id=sc1.sid  where  sc1.cid=1 ;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p><strong>查询不存在1课程但存在2课程的情况</strong> (<strong>不存在时显示为 null</strong>)</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sc2.sid ,sc2.cid ,sc1.score 课程1,sc2.score 课程2 from (select *from sc where cid=1 ) sc1  RIGHT join (select *from sc where cid=2 ) sc2 on sc1.sid=sc2.sid where sc1.cid is null and sc2.cid=2;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询平均成绩大于等于 60 分的同学的学生编号和学生姓名和平均成绩</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,avg(sc.score) from student s join sc sc on s.id=sc.sid group by s.id having avg(sc.score)&gt;60 ; </span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询在 SC 表存在成绩的学生信息</p>
-</li>
-</ol>
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct s.id,s.sname from student s join sc sc on s.id=sc.sid where exists(select 1 from sc where score is not null);</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="7">
-<li><p>查询所有同学的学生编号、学生姓名、选课总数、所有课程的总成绩</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id ,s.sname,count(sc.cid),sum(sc.score) from student s join sc sc where sc.sid=s.id group by s.id;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询「李」姓老师的<strong>数量</strong></p>
-<p><code>查询李老师的带过的学生的数量/授课的数量</code></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方法一.select (select count( c.id) '授课数' from teacher t join course c on c.tid=t.id join sc sc on sc.cid=c.id  where t.tname like '李%') 授课数,(select count( sc.sid) '学生数' from teacher t join course c on c.tid=t.id join sc sc on sc.cid=c.id  where t.tname like '李%')  带过的学生;select (select count(distinct c.id) '授课数' from teacher t join course c on c.tid=t.id join sc sc on sc.cid=c.id  where t.tname like '李%') 授课数；</span><br><span class="line"></span><br><span class="line">方法2. select t.tname 老师姓名, count(distinct s.id) 学生数量,count(sc.cid) 授课数量 from student s join sc sc on sc.sid=s.id join course c on c.id=sc.cid join teacher t on t.id=c.tid where t.tname like '李%' group by t.id;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询学过「张三」老师授课的<strong>同学的信息</strong></p>
-</li>
-</ol>
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">方法一.select s.id,s.sname from student s join sc sc on sc.sid=s.id where sc.cid=</span><br><span class="line">(select  c.id from teacher t left join  course c on c.tid=t.id where t.tname='张三')</span><br><span class="line"></span><br><span class="line"> 方法二.select  distinct s.*  from student s join sc sc on sc.sid=s.id join course c on c.id=sc.cid join teacher t on t.id=c.tid where t.tname='张三' ;</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="10">
-<li>查询没有学全所有课程的<strong>同学的信息</strong></li>
-</ol>
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname from student s join sc sc on sc.sid=s.id  GROUP BY s.id HAVING count(*)!=(select count(*) from course);</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="11">
-<li><strong>查询至少有一门课与学号为1的同学所学相同的同学的信息</strong></li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname from student s join sc sc on sc.sid=s.id where sc.cid in (select sc1.cid from sc sc1 where sc1.sid=1);</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="12">
-<li>查询和id=1的同学学习的课程 完全相同的其他<strong>同学的信息（重要）</strong> - <em><strong>非常重要,非常重要,非常重要,非常重要,非常重要!</strong></em></li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,s.age,s.sex from student s where s.id in(select sc.sid from sc where sc.sid&lt;&gt;1 and sc.cid in(select sc.cid from sc where sc.sid=1) group by sc.sid having count(*)=(select count(*) from sc where sc.sid=1));</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="13">
-<li><p>查询没学过”张三”老师讲授的任一门课程的<strong>学生姓名</strong></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct s.id ID ,s.sname 学生姓名 from sc sc2  right join student s on s.id= sc2.sid where s.id not in(select sc.sid from sc where sc.cid=(  select  c.id from teacher t left join  course c on c.tid=t.id where t.tname='张三'));</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询两门及其以上不及格课程的同学的<strong>学号，姓名及其平均成绩</strong></p>
-</li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.sname 姓名,s.id 学号,avg(sc.score) 平均分 from student  s left join sc sc on s.id=sc.sid where sc.score&lt;60 group by s.id having count(*)&gt;=2 ;</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="15">
-<li>检索” 01 “课程分数小于 60，按分数降序排列的<strong>学生信息</strong></li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.sname 姓名,s.id 学号,sc.score  from student  s left join sc sc on s.id=sc.sid where sc.score&lt;60  and sc.cid='01' order by  3 desc;</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="16">
-<li><p>按平均成绩从高到低显示所有学生的所有课程的<strong>成绩以及平均成绩</strong></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id ID,s.sname 姓名,coalesce(sc.cid,'未选') 课程编号, coalesce(sc.score,0) 分数,coalesce((select avg(sc2.score) from sc sc2 where sc2.sid=s.id),0) 平均分 from student  s left join sc sc on s.id=sc.sid order by 5 desc; </span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p><strong>查询各科成绩前三名的记录</strong></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select  s.id id,s.sname 姓名,sc.cid 课程号, sc.score 分数 from student  s  join sc sc on s.id=sc.sid where exists (select 1 from sc sc1 where sc.cid=sc1.cid and sc.score&lt;sc1.score  having count(*)&lt;3) order by 4 desc, 3 desc; </span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询每门课程被选修的学生数</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select c.id 课程号,c.cname 课程名,count(sc.sid) 学生数 from sc  right join course c on c.id=sc.cid group by sc.cid;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询出只选修两门课程的学生学号和姓名</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname from student s join sc sc on sc.sid=s.id group by s.id having count(sc.cid)=2;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询男生、女生人数</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.sex 性别,count(s.sex) 人数 from student s group by s.sex;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询名字中含有「风」字的学生信息</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from student s where s.sname like '%风%';</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询<strong>同名同性</strong>学生名单，并统计同名同性人数</p>
-</li>
-</ol>
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from student s where exists (select 1 from student s2 where s2.sname=s.sname having count(*)&gt;=2);</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="23">
-<li>查询 1990 年出生的学生名单</li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select *from student s where year(s.age)=1990; </span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="24">
-<li><p>查询每门课程的平均成绩，结果按平均成绩降序排列，平均成绩相同时，按课程编号升序排列</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select c.cname 课程名,sc.cid 课程id,avg(sc.score) 平均成绩 from course c left join sc sc on sc.cid=c.id group by c.id order by  3 desc,2;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询平均成绩大于等于 85 的所有学生的学号、姓名和平均成绩</p>
-</li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id id,s.sname 姓名,coalesce(avg(sc.score),0) 平均成绩 from student s left join sc sc on s.id=sc.sid group by s.id having 平均成绩&gt;85;</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="26">
-<li><p>查询课程名称为「数学」，且分数低于 60 的学生姓名和分数</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id id,s.sname 姓名,sc.score 分数 from student s join sc sc on s.id=sc.sid join course c on c.id=sc.cid where c.cname='数学' and sc.score&lt;60;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询任何一门课程成绩在 70 分以上的姓名、课程名称和分数</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id id,s.sname 姓名 ,sc.cid 课程名 ,sc.score 分数 from student s left join sc sc on s.id=sc.sid where sc.score&gt;70;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询存在不及格的课程</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sc.cid ,c.cname from sc sc join course c on c.id=sc.cid where sc.score&lt;60 group by sc.cid ;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>查询课程编号为 01 且课程成绩在 80 分以上的学生的学号和姓名</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname from student s join sc sc on sc.sid=s.id where sc.cid=1 and sc.score&gt;80 group by s.id,s.sname;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>求每门课程的学生人数</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sc.cid ,count(sc.sid) from sc group by sc.cid ;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>假设<strong>成绩不重复</strong>，查询选修「张三」老师所授课程的学生中，成绩最高的学生信息及其成绩</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,sc.score from student s join sc on sc.sid=s.id join course c on c.id=sc.cid join teacher t on t.id=c.tid and t.tname ='张三' where exists (select * from sc sc2 where sc.cid=sc2.cid and sc.score&lt;sc2.score having count(*)&lt;1) ;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p><strong>假设成绩有重复的情况下，查询选修「张三」老师所授课程的学生中，成绩最高的学生信息及其成绩</strong></p>
-</li>
-</ol>
-   <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from student s join sc on sc.sid=s.id join course c on c.id=sc.cid join teacher t on t.id=c.tid and t.tname ='张三' where exists (select * from sc sc2 where sc.cid=sc2.cid and sc.score&gt;=sc2.score having count(*)=(select count(sc3.cid) from sc sc3 where sc3.cid=sc.cid)) ;</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="33">
-<li><p>查询<strong>不同课程成绩相同</strong>的学生的学生编号、课程编号、学生成绩</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select s.id,s.sname,sc.cid,sc.score from student s join sc sc on sc.sid=s.id join sc sc2 on sc.sid=sc2.sid where sc.score=sc2.score and</span><br><span class="line">sc.cid!=sc2.cid;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li><p>统计每门课程的学生选修人数（超过 5 人的课程才统计）</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sc.cid,count(*) from sc group by sc.cid having count(*)&gt;5</span><br></pre></td></tr></tbody></table></figure>
-
-
-
-<ol start="34">
-<li>检索至少选修两门课程的学生学号</li>
-</ol>
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id from student s join sc on sc.sid=s.id  group by s.id having count(sc.cid)&gt;=2;</span><br></pre></td></tr></tbody></table></figure>
-
-<ol start="36">
-<li>查询选修了全部课程的学生信息</li>
-</ol>
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s.id from student s join sc on sc.sid=s.id  group by s.id having count(sc.cid)=(select count(c.id) from course c );  </span><br></pre></td></tr></tbody></table></figure>
-</blockquote>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/interview/" rel="tag">interview</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-      
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">
