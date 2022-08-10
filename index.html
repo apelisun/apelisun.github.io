@@ -48,7 +48,8 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-				<img lazy-src="/img/header.jpg" class="js-avatar">
+				<img lazy-src="/img/main.jpg" class="js-avatar">
+				<p>要么荣归故里，要么客死他乡<p/>
 			
 		</a>
 
@@ -784,7 +785,7 @@
 </ol>
 </blockquote>
 <blockquote>
-<p><img src="/z.png"> </p>
+<p><img src="/img/z.jpg"> </p>
 </blockquote>
 <blockquote>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">主键列 - key是不允许重复的</span><br><span class="line">非主键列 - key是允许重复的.</span><br><span class="line">select * from xxx where id=5;</span><br><span class="line"></span><br><span class="line">1. 先到B+树找到找到id=5对应的节点 - 取出里面的行记录的物理地址0x6a</span><br><span class="line">2. 回表 - 直接根据行记录的物理地址直接定位到具体的一行.</span><br></pre></td></tr></tbody></table></figure></blockquote>
