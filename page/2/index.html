@@ -88,7 +88,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/B-%E6%A0%91/" style="font-size: 10px;">B+树</a> <a href="/tags/area/" style="font-size: 10px;">area</a> <a href="/tags/collection/" style="font-size: 10px;">collection</a> <a href="/tags/homework/" style="font-size: 10px;">homework</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/interview/" style="font-size: 10px;">interview</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/meet-DB/" style="font-size: 10px;">meet DB</a> <a href="/tags/msql/" style="font-size: 10px;">msql</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/procedure/" style="font-size: 10px;">procedure</a> <a href="/tags/view/" style="font-size: 10px;">view</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据库基础</a>
+						<a href="/tags/B-%E6%A0%91/" style="font-size: 10px;">B+树</a> <a href="/tags/area/" style="font-size: 10px;">area</a> <a href="/tags/collection/" style="font-size: 10px;">collection</a> <a href="/tags/gitee-command/" style="font-size: 10px;">gitee_command</a> <a href="/tags/homework/" style="font-size: 10px;">homework</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/interview/" style="font-size: 10px;">interview</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/meet-DB/" style="font-size: 10px;">meet DB</a> <a href="/tags/msql/" style="font-size: 10px;">msql</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/procedure/" style="font-size: 10px;">procedure</a> <a href="/tags/view/" style="font-size: 10px;">view</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%AE%9E%E7%94%A8%E8%A3%85b%E6%8A%80%E5%B7%A7/" style="font-size: 10px;">个人实用装b技巧</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据库基础</a>
 					</div>
 				</section>
 				
@@ -149,6 +149,746 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-mysql3" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/mysql3/" class="article-date">
+  	<time datetime="2022-08-09T13:23:13.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/08/09/mysql3/">
+        mysql3
+        
+      </a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DB设计"><a href="#DB设计" class="headerlink" title="DB设计"></a>DB设计</h1><blockquote>
+<p>指导db设计的思想,避免表中出现大量的冗余的数据.但是实际开发中表中是允许出现冗余的字段的.</p>
+<p>冗余数据的好处 - 安全,方便查询.坏处-&gt;delete和update操作</p>
+</blockquote>
+<blockquote>
+<ol>
+<li><p>1NF - 第一范式-保证列的原子性,保证列不可再切割</p>
+<p>s_emp(id,name) - 发现name不具备原子性,可以被再次切割(fist_name,last_name)</p>
+<p>s_ord(id,address) - address显示为省市区 - 江苏省苏州市园区</p>
+<p>address再次分成(province,city,area)</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">主要是为了查询.</span><br><span class="line"></span><br><span class="line">select * from s_ord where address like '%苏州%';</span><br><span class="line"></span><br><span class="line">select * from s_ord where city = '苏州';</span><br><span class="line"></span><br><span class="line">-- address,city加索引.</span><br><span class="line">-- 模糊查询可能导致索引失效.但是精确匹配是走索引的.</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>2NF - 基于1NF,要求非关键列要全部依赖于关键列.  不存在非关键列部分依赖于关键列</p>
+<p>关键列 - 主键列 - 非空且唯一 - table中的id设置成主键列.</p>
+<p>student(sid,sname,cid,cname);//关键列(sid,cid) - 确定唯一的元组(行) - 复合主键</p>
+<p>sname,cname - 非关键列.</p>
+<p>(sid,cid) -&gt; 唯一确定 -&gt; sname/cname</p>
+<p>sid -&gt; sname,cid -&gt; cname</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student(sid,sname)</span><br><span class="line">course(cid,cname);</span><br><span class="line">sc(sid,cid,kpi);//(sid,cid) -&gt; kpi</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>3NF- 基于2NF,要求非关键列不能传递依赖于关键列.</p>
+<p>student(sid,sname,uid,uv_name,u_phone);</p>
+<p>u_phone传递依赖于sid - <code>原因sid -&gt; uid -&gt; u_phone</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">student(sid,sname,uid);//uid就是foreign key 外键列</span><br><span class="line">university(uid,u_name,u_phone);</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><blockquote>
+<ol>
+<li>用户表t_user</li>
+<li>视频表t_video</li>
+<li>评论表和回复表设计</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>用户对视频进行评论(t_comment)和回复(t_repy)的场景:</p>
+<p>tom 发布了 搞笑的视频</p>
+<p>admin 评论:  😁😎</p>
+<p>​             li评论admin: 你笑什么!</p>
+<p>​			 lei回复@li: 管你什么事情!</p>
+<p>​			 x回复@li: 你想表达什么!</p>
+<p>​			 y回复@x: ….</p>
+<p>​			 k 评论admin:你笑什么!</p>
+<p>jack  评论: 😄</p>
+</blockquote>
+<p><code>t_user</code></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>usernmae</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>tom</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>admin</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>li</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>lei</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>x</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>y</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>k</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><code>t_video</code></p>
+<p>一个用户可以发布多个视频</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>video</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>佩洛西</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p><code>t_comment</code></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>video_id</th>
+<th>content</th>
+<th>comment_id</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>😁😎</td>
+<td></td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>你笑什么!</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>你笑什么!</td>
+<td>1</td>
+<td>7</td>
+</tr>
+</tbody></table>
+<p><code>t_reply</code></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>comment_id</th>
+<th>conent</th>
+<th>reply_id</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2</td>
+<td>管你什么事情!</td>
+<td></td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>你想表达什么!</td>
+<td></td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>…</td>
+<td>2</td>
+<td>6</td>
+</tr>
+</tbody></table>
+<h1 id="DDL语言"><a href="#DDL语言" class="headerlink" title="DDL语言"></a>DDL语言</h1><blockquote>
+<p>Data Definition Language - 数据定义语言.</p>
+<p>包括的命令:create drop alter comment rename truncate</p>
+</blockquote>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><blockquote>
+<ol>
+<li><p>数字类型</p>
+<ul>
+<li>整数 - int/bigint</li>
+<li>小数 - float/double/decimal</li>
+</ul>
+<p><code>要点</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">	id int(7)</span><br><span class="line">);</span><br><span class="line">此处的7并不是代表此列的最大长度.误区:最大可保存的值是9999999</span><br><span class="line">实际上该列可以存储的最大值是由类型决定了.</span><br><span class="line"></span><br><span class="line">配置zerofill  0填充</span><br><span class="line">create table t_type(</span><br><span class="line">	id int(7) zerofill</span><br><span class="line">);</span><br><span class="line">insert into t_type values(1);</span><br><span class="line"></span><br><span class="line">不足7位,会采用0来填充</span><br><span class="line"></span><br><span class="line">+---------+</span><br><span class="line">| id      |</span><br><span class="line">+---------+</span><br><span class="line">| 0000001 |</span><br><span class="line">+---------+</span><br><span class="line"></span><br><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">	c1 float(5,2),</span><br><span class="line">  c2 double(5,2),</span><br><span class="line">  c3 decimal(5,2)</span><br><span class="line">);</span><br><span class="line">float(m,n) =&gt; m总长度,n代表的小数点</span><br><span class="line">insert into t_type(c1) values(12.345);</span><br><span class="line">mysql&gt; select * from t_type;</span><br><span class="line"></span><br><span class="line">-- 小数保留2位,并且四舍五入</span><br><span class="line">+-------+------+------+</span><br><span class="line">| c1    | c2   | c3   |</span><br><span class="line">+-------+------+------+</span><br><span class="line">| 12.35 | NULL | NULL |</span><br><span class="line">+-------+------+------+</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into t_type(c2) values(123.5); //ok</span><br><span class="line">mysql&gt; select * from t_type;</span><br><span class="line">+-------+--------+------+</span><br><span class="line">| c1    | c2     | c3   |</span><br><span class="line">+-------+--------+------+</span><br><span class="line">| 12.35 |   NULL | NULL |</span><br><span class="line">|  NULL | 123.50 | NULL |</span><br><span class="line">+-------+--------+------+</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into t_type(c2) values(1234.5);</span><br><span class="line"></span><br><span class="line">`原因:1234.5 =&gt; 1234.50 已经超过5位了`</span><br><span class="line">ERROR 1264 (22003): Out of range value for column 'c2' at row 1</span><br><span class="line"></span><br><span class="line">float/double =&gt; 非标准  decimal标准 - 对精度有特别要求的</span><br><span class="line"></span><br><span class="line">insert into t_type(c3) values(123.589);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>关于日期类型</p>
+<p>date </p>
+<p>datetime</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">  id int,</span><br><span class="line">	create_date date default now()</span><br><span class="line">);</span><br><span class="line">ERROR 1067 (42000): Invalid default value for 'create_date'</span><br><span class="line"></span><br><span class="line">如果某个列期望默认值是now(),一定要设置成datetime</span><br><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">  id int,</span><br><span class="line">	create_date datetime default now()</span><br><span class="line">);</span><br><span class="line">insert into t_type(id) values(1);</span><br><span class="line"></span><br><span class="line">-- 满足日期能够支持的字符串格式</span><br><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">  id int,</span><br><span class="line">	create_date date default '2012-09-08 12:12:12'</span><br><span class="line">);</span><br><span class="line">insert into t_type(id) values(1);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>字符串类型</p>
+<ul>
+<li><p>char和varchar区别</p>
+<p>char(n),varchar(n) =&gt; 代表的字符的个数</p>
+<p>区别: char是定长,varchar是可变长.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">   s1 char(2),</span><br><span class="line">   s2 varchar(2)</span><br><span class="line">);</span><br><span class="line">insert into t_type(s1) values('ab');</span><br><span class="line"></span><br><span class="line">insert into t_type(s2) values('abc');</span><br><span class="line"></span><br><span class="line">char(2) =&gt; 实际存储1个'a',实际消耗了2个</span><br><span class="line">varchar(2) =&gt; 假设'a',实际仅仅消耗了1个,最大消耗2个.</span><br><span class="line">varchar更加节约空间.  char效率会更高一点 - 不推荐用char</span><br><span class="line"></span><br><span class="line">-- oracle中数据中</span><br><span class="line">drop table t_type;</span><br><span class="line">create table t_type(</span><br><span class="line">   s1 char(2)</span><br><span class="line">);</span><br><span class="line">insert into t_type(s1) values('a');</span><br><span class="line"></span><br><span class="line">-- oracle查询为empty</span><br><span class="line">-- mysql中空直接比较的时候剔除,大小写比较都是一样的.</span><br><span class="line">select * from t_type where s1='a';</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>text - 0-65 535 bytes - 长文本</p>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="约束类型"><a href="#约束类型" class="headerlink" title="约束类型"></a>约束类型</h2><blockquote>
+<ol>
+<li><p>主键约束 primary key 非空且唯一</p>
+<p>主键列可以是由多列共同组成 - 符合主键列</p>
+<p>但是表中只能出现一个主键</p>
+</li>
+<li><p>外键约束 foreign key </p>
+<ul>
+<li><p>外键列允许为null</p>
+</li>
+<li><p>外键列是多出现在多的一方中.建立表与表之间的关系的</p>
+</li>
+<li><p>开发中不需要设置外键 - 造成表与表之间的耦合. </p>
+<p>表和表之间的关系是在”心中”!</p>
+</li>
+</ul>
+</li>
+<li><p>非空约束 - not null</p>
+</li>
+<li><p>唯一约束 - unique</p>
+</li>
+<li><p>default - 默认值</p>
+</li>
+<li><p>mysql中不支持自检约束,oracle中支持的check检查约束.但是mysql中可以使用触发器来实现.</p>
+</li>
+</ol>
+</blockquote>
+<h1 id="创建表语法"><a href="#创建表语法" class="headerlink" title="创建表语法"></a>创建表语法</h1><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">DROP table 表名;</span><br><span class="line">-- 约束列级添加</span><br><span class="line">CREATE TABLE 表名(</span><br><span class="line">	列名 数据类型(n) 约束类型 COMMNET '注释',</span><br><span class="line">  列名 数据类型(n) 约束类型 COMMNET '注释'</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">engine 指定存储引擎,默认的就是innodb(外键约束,事务,行锁,表锁)</span><br><span class="line">之前的版本应该是myisam(仅仅支持表锁)</span><br><span class="line"></span><br><span class="line">-- 约束表级</span><br><span class="line">-- 约束命名规范:表名_列名_约束类型缩写</span><br><span class="line">CREATE TABLE 表名(</span><br><span class="line">	列名 数据类型(n) COMMNET '注释',</span><br><span class="line">  列名 数据类型(n) COMMNET '注释',</span><br><span class="line">  [CONSTRAINT 约束名称] 约束类型(列名),</span><br><span class="line">  [CONSTRAINT 约束名称] 约束类型(列名)</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="列级添加方式"><a href="#列级添加方式" class="headerlink" title="列级添加方式"></a>列级添加方式</h2><blockquote>
+<p>直接在列的后面的增加关于该列的约束</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">drop table t_user;</span><br><span class="line">create table t_user(</span><br><span class="line">	id int(7) primary key,</span><br><span class="line">username varchar(20) unique not null,</span><br><span class="line">	birthday date default '1991-09-08'</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">insert into t_user(id) values(1);</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="表级添加方式"><a href="#表级添加方式" class="headerlink" title="表级添加方式"></a>表级添加方式</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">-- not null仅仅支持列级添加</span><br><span class="line">drop table t_user;</span><br><span class="line">create table t_user(</span><br><span class="line">	id int(7),</span><br><span class="line">  username varchar(20) not null,</span><br><span class="line"> 	birthday date,</span><br><span class="line">  constraint t_user_id_pk primary key(id),</span><br><span class="line">  constraint t_user_username_uq unique(username)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">-- 约束名 - 提高错的可读性</span><br><span class="line">insert into t_user(id) values(1);</span><br><span class="line"></span><br><span class="line">-- 数据字典 - 描述表的表</span><br><span class="line">-- 数据字典就是用来存放用户信息/用户创建的这表的信息.</span><br><span class="line">show tables;</span><br><span class="line">desc 表名;</span><br><span class="line"></span><br><span class="line">-- 使用系统自带的数据库mysql</span><br><span class="line">use information_schema</span><br><span class="line"></span><br><span class="line">-- TABLE_CONSTRAINTS 表名 - 数据字典 - 专门存储每个用户的表的约束信息</span><br><span class="line">desc table_constraints</span><br><span class="line">+--------------------+--------------+------+-----+---------+-------+</span><br><span class="line">| Field              | Type         | Null | Key | Default | Extra |</span><br><span class="line">+--------------------+--------------+------+-----+---------+-------+</span><br><span class="line">| CONSTRAINT_CATALOG | varchar(512) | NO   |     |         |       |</span><br><span class="line">| CONSTRAINT_SCHEMA  | varchar(64)  | NO   |     |         |       |</span><br><span class="line">| CONSTRAINT_NAME    | varchar(64)  | NO   |     |         |       |</span><br><span class="line">| TABLE_SCHEMA       | varchar(64)  | NO   |     |         |       |</span><br><span class="line">| TABLE_NAME         | varchar(64)  | NO   |     |         |       |</span><br><span class="line">| CONSTRAINT_TYPE    | varchar(64)  | NO   |     |         |       |</span><br><span class="line">+--------------------+--------------+------+-----+---------+-------+</span><br><span class="line">CONSTRAINT_NAME - 约束名称</span><br><span class="line">TABLE_NAME - 表名</span><br><span class="line">CONSTRAINT_TYPE - 约束类型</span><br><span class="line"></span><br><span class="line">-- 查询出T_USER表中的约束信息</span><br><span class="line">select constraint_name,constraint_type,table_name from table_constraints</span><br><span class="line">where table_name='T_USER' and table_schema='dy';</span><br><span class="line"></span><br><span class="line">-- 查询t_user表中的所有的列的名称以及列的数据类型</span><br><span class="line">select column_name,column_type,data_type,column_key from columns where table_schema='dy' and table_name='t_user';</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="建表的其他语法"><a href="#建表的其他语法" class="headerlink" title="建表的其他语法"></a>建表的其他语法</h2><blockquote>
+<ol>
+<li><p>利用一张已经存在的表来构建另外一张表</p>
+<ul>
+<li><p>保留原来表中的数据</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">drop table t_user;</span><br><span class="line">create table t_user(</span><br><span class="line">	id int(7),</span><br><span class="line">  username varchar(20) not null,</span><br><span class="line"> 	birthday date,</span><br><span class="line">  constraint t_user_id_pk primary key(id),</span><br><span class="line">  constraint t_user_username_uq unique(username)</span><br><span class="line">);</span><br><span class="line">insert into t_user values(1,'tom','2021-09-08');</span><br><span class="line">insert into t_user values(2,'jack','2022-09-08');</span><br><span class="line"></span><br><span class="line">-- 克隆</span><br><span class="line">CREATE TABLE 表名 AS SELECT查询语句;</span><br><span class="line"></span><br><span class="line">create table t_user_copy as select * from t_user;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>保留原表的结构,但是不保留数据</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop table t_user_copy;</span><br><span class="line">     </span><br><span class="line">create table t_user_copy as select * from t_user where 1=2;</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li><p>查看建表语句-DDL</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show create table 表名;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>如果是一个1:n</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">drop table t_ord;</span><br><span class="line">drop table t_customer;</span><br><span class="line">create table t_customer(</span><br><span class="line">	id int(7),</span><br><span class="line">  cname varchar(20) not null,</span><br><span class="line">  constraint t_customer_id_pk primary key(id)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">create table t_ord(</span><br><span class="line">	id int(7) primary key,</span><br><span class="line">  ord_no varchar(20) not null unique,</span><br><span class="line">  total double(7,2),</span><br><span class="line">  customer_id int(7),</span><br><span class="line">  constraint t_ord_customer_id_fk foreign key(customer_id) references t_customer(id)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">-- 一定是父级表t_customer</span><br><span class="line">-- 删表 - 先删除子表,多的一方,外键所在的那张表.</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>n:n</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">drop table t_sc;</span><br><span class="line">drop table t_student;</span><br><span class="line">drop table t_course;</span><br><span class="line">   </span><br><span class="line">create table t_student(</span><br><span class="line">	id int primary key</span><br><span class="line">);</span><br><span class="line">create table t_course(</span><br><span class="line">	id int primary key</span><br><span class="line">);</span><br><span class="line">create table t_sc(</span><br><span class="line">	sid int,</span><br><span class="line">  cid int,</span><br><span class="line">  primary key(sid,cid),</span><br><span class="line">  foreign key(sid) references t_student(id),</span><br><span class="line">  foreign key(cid) references t_course(id)</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="自学的知识点"><a href="#自学的知识点" class="headerlink" title="自学的知识点"></a>自学的知识点</h2><blockquote>
+<p>四种分区方式 - 测试</p>
+</blockquote>
+<h1 id="DML操作"><a href="#DML操作" class="headerlink" title="DML操作"></a>DML操作</h1><h2 id="insert语句"><a href="#insert语句" class="headerlink" title="insert语句"></a>insert语句</h2><blockquote>
+<ul>
+<li><p>给表中所有的列都插入数据,但是需要注意的是顺序/类型/约束</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into 表名 values(列1,列2,列3);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>给指定的列插入数据</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into 表名(列名1,列名2) values(列1,列2);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>批量插入</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into 表名 values(列1,列2,列3),(列1,列2,列3),(列1,列2,列3);</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</blockquote>
+<h2 id="delete语句"><a href="#delete语句" class="headerlink" title="delete语句"></a>delete语句</h2><blockquote>
+<ul>
+<li><p>delete from 表名;//删除表中的数据</p>
+</li>
+<li><p>delete from 表名 where 条件;</p>
+</li>
+<li><p>外键约束会对delete产生影响,一定是先删除子记录,然后才能够删除父记录.</p>
+<p>先删除多的一方,然后才能够删除一的一方.</p>
+</li>
+<li><p>级联删除 - 删除的一方之前先将这个一方的子记录全部删除</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">drop table t_ord;</span><br><span class="line">drop table t_customer;</span><br><span class="line">create table t_customer(</span><br><span class="line">	id int(7),</span><br><span class="line">  cname varchar(20) not null,</span><br><span class="line">  constraint t_customer_id_pk primary key(id)</span><br><span class="line">);</span><br><span class="line">insert into t_customer values(1,'admin');</span><br><span class="line">insert into t_customer values(2,'tom');</span><br><span class="line"></span><br><span class="line">create table t_ord(</span><br><span class="line">	id int(7) primary key,</span><br><span class="line">  ord_no varchar(20) not null unique,</span><br><span class="line">  total double(7,2),</span><br><span class="line">  customer_id int(7),</span><br><span class="line">  constraint t_ord_customer_id_fk foreign key(customer_id) references t_customer(id) on delete cascade</span><br><span class="line">);</span><br><span class="line">insert into t_ord values(1,'1001',300,1);</span><br><span class="line">insert into t_ord values(2,'1002',300,null);</span><br></pre></td></tr></tbody></table></figure>
+
+
+<p>delete from t_customer where id=1;</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</blockquote>
+<h2 id="update语句"><a href="#update语句" class="headerlink" title="update语句"></a>update语句</h2><blockquote>
+<ul>
+<li>update 表 set 列名=列值,列名2=列值;//更新表中所有行</li>
+<li>update 表 set 列名=列值,列名2=列值 WHERE条件;//</li>
+</ul>
+</blockquote>
+<h2 id="truncate和delete和drop"><a href="#truncate和delete和drop" class="headerlink" title="truncate和delete和drop"></a>truncate和delete和drop</h2><p><code>共同点</code></p>
+<blockquote>
+<p>1.truncate和不带where子句的delete、以及drop都会删除表内的数据。</p>
+<p>2.drop、truncate都是DDL语句(数据定义语言),执行后会自动提交。</p>
+</blockquote>
+<p><code>不同点</code></p>
+<blockquote>
+<p> delete 语句是数据库操作语言(dml)，这个操作会放到 rollback segement 中，事务提交之后才生效；如果有相应的 trigger，执行的时候将被触发。</p>
+<p> <strong>truncate</strong>、drop 是数据库定义语言(ddl)，操作立即生效，原数据不放到 rollback segment 中，<strong>不能回滚</strong>，操作不触发 trigger</p>
+</blockquote>
+<blockquote>
+<p>速度，一般来说: drop&gt; truncate &gt; delete</p>
+</blockquote>
+<h1 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h1><blockquote>
+<ul>
+<li>limit m  // 前m行</li>
+<li>limit m,n //   m从下标0开始(第一行),n显示行数</li>
+</ul>
+</blockquote>
+<h2 id="分页的公式"><a href="#分页的公式" class="headerlink" title="分页的公式"></a>分页的公式</h2><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Page&lt;Book&gt; <span class="title function_">page</span><span class="params">(Integer pageNum,Integer pageSize)</span>{</span><br><span class="line">    <span class="comment">// limit (pageNum-1)*pageSize,pageSize</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">//1,3    0</span></span><br><span class="line">    <span class="comment">//2,2    3</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="分页的查询效率问题"><a href="#分页的查询效率问题" class="headerlink" title="分页的查询效率问题"></a>分页的查询效率问题</h2><blockquote>
+<p>limit m,n 其中的m叫做偏移量. 偏移量越大,分页的性能越低.</p>
+<p>比如表1-100000,正好id=1,10000</p>
+<p>select * from 表 where id&gt;条件 limit 2;</p>
+<p>条件查询(减少偏移量) + limit</p>
+</blockquote>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><blockquote>
+<p>用来执行一组SQL,是db中完成<strong>业务的基本单位.</strong></p>
+</blockquote>
+<h2 id="事务ACID特性"><a href="#事务ACID特性" class="headerlink" title="事务ACID特性"></a>事务ACID特性</h2><blockquote>
+<ol>
+<li><p>原子性（Atomicity) - 事务不可再分割.</p>
+<p>事务要么同时成功,同时失败 - 比如转账业务.</p>
+</li>
+<li><p>一致性(Consistency) - 事务一旦提交.内存中的数据要和磁盘上的数据要一致,保证数据的完整性.</p>
+<p>比如tom-500,jack-500.无论转多少,转多少次.反正总的钱是1000</p>
+</li>
+<li><p>隔离性(isolation): 事务与事务之间的彼此隔离的,互不干扰的.一个事务的结束,意味着下一个事务的开始.</p>
+</li>
+<li><p>持久性(Durability) - 事务一旦提交,数据应该永久保存在磁盘中.即使发生一些故障,应该可以用一些恢复的技术进行恢复.</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="事务的分类"><a href="#事务的分类" class="headerlink" title="事务的分类"></a>事务的分类</h2><blockquote>
+<ol>
+<li>本地事务 - 一个项目(单体架构)连接一个数据库</li>
+<li>分布式事务 <ul>
+<li>消息中间件 - rabbitmq,rocketmq</li>
+<li>阿里的框架seata</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h2><blockquote>
+<ol>
+<li><p>① Serializable (串行化)：可避免脏读、不可重复读、幻读的发生。</p>
+<p>锁表.</p>
+</li>
+<li><p>② Repeatable read (可重复读)：可避免脏读、不可重复读的发生。</p>
+</li>
+<li><p>③ Read committed (读已提交)：可避免脏读的发生。</p>
+<p>一个事务只能读取到另外一个事务已经提交的数据.</p>
+</li>
+<li><p>④ Read uncommitted (读未提交)：最低级别，任何情况都无法保证。产生脏读.</p>
+<p>一个事务可以读取到另外一个事务尚未提交的数据</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="查询当前会话的隔离级别"><a href="#查询当前会话的隔离级别" class="headerlink" title="查询当前会话的隔离级别"></a>查询当前会话的隔离级别</h2><p><code>mysql默认的是可重复读的隔离级别</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select @@tx_isolation;</span><br><span class="line"></span><br><span class="line">+-----------------+</span><br><span class="line">| @@tx_isolation  |</span><br><span class="line">+-----------------+</span><br><span class="line">| REPEATABLE-READ |</span><br><span class="line">+-----------------+</span><br><span class="line"></span><br><span class="line">临时设置一下当前会话的事务的隔离级别</span><br><span class="line">set session transaction isolation level read uncommitted;</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="事务TCL命令"><a href="#事务TCL命令" class="headerlink" title="事务TCL命令"></a>事务TCL命令</h1><blockquote>
+<p>begin(开启一个事务),commit(提交一个事务),savepoint 事务点</p>
+<p>set autocommit=0;//手动开启一个事务</p>
+<p>DML操作默认都是会自动提交事务.</p>
+</blockquote>
+<h2 id="补充一点"><a href="#补充一点" class="headerlink" title="补充一点"></a>补充一点</h2><blockquote>
+<ol>
+<li><p>rollback - 回滚事务 - 结束一个事务</p>
+<p>不能回滚已经commit之后的事务.</p>
+</li>
+<li><p>savepoint 事务点</p>
+<p>rollback to 事务点</p>
+<p>如果么有设置事务点 - 回滚当前事务中所有的操作.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; begin;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; update t_acc set balance=balance+1000 where id=1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; savepoint t1;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; update t_acc set balance=balance+1000 where id=2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; rollback to t1;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; commit;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h1 id="多事务并发带来的问题"><a href="#多事务并发带来的问题" class="headerlink" title="多事务并发带来的问题"></a>多事务并发带来的问题</h1><blockquote>
+<p>多个事务对同一个数据进行操作的时候,会产生一些问题</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">drop table t_acc;</span><br><span class="line">create table t_acc(</span><br><span class="line">	id int,</span><br><span class="line">balance double(7,2)</span><br><span class="line">);</span><br><span class="line">insert into t_acc values(1,10000),(2,10000);</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h2><blockquote>
+<p>一个事务读到了另外一个事务没有提交的数据 - 绝对不允许的.</p>
+<p><img src="C:/Users/liming/Desktop/zang.png">  </p>
+</blockquote>
+<h2 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h2><blockquote>
+<p>set session transaction isolation level read committed;</p>
+<p>一个事务A在读取一次之后,另外一个事务B在进行update操作.并且commit.</p>
+<p>A事务在没有自己没有提交之前,读取到了B事务提交之后的数据.导致A事务在当前事务中多次读取到的结果不一样.</p>
+<p><img src="C:/Users/liming/Desktop/no.png"> </p>
+</blockquote>
+<h2 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h2><blockquote>
+<p>它和不可重复读类似.侧重点不同.不可重复读强调的是一个事务在查询.另外一个事务在修改(update)</p>
+<p>幻读强调的是一个事务在修改.另外一个事务在插入(insert).</p>
+<p>set session transaction isolation level read committed;</p>
+<p><img src="C:/Users/liming/Desktop/huan.png"> </p>
+</blockquote>
+<blockquote>
+<p>事务A在修改,事务B-insert并且提交了.事务A在本事务中再次查询,发现了好像有”更新失败”的数据.就像发生了幻觉一样.</p>
+</blockquote>
+<h2 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h2><blockquote>
+<p>默认的隔离级别</p>
+<p>set session transaction isolation level repeatable read;</p>
+</blockquote>
+<blockquote>
+<p>事务A读取一次,事务B执行update操作.事务A在没有结束当前事务之前,多次读取到的结果是一样的.</p>
+<p>必须要commit之后,才能够读取到B事务提交之后的修改数据.</p>
+<p><img src="C:/Users/liming/Desktop/repeat.png"> </p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th></th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>读已提交</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>可重复读</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/meet-DB/" rel="tag">meet DB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+      
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-mysql2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2022/08/09/mysql2/" class="article-date">
+  	<time datetime="2022-08-09T13:22:58.000Z" itemprop="datePublished">2022-08-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/08/09/mysql2/">
+        mysql2
+        
+      </a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="视图-view"><a href="#视图-view" class="headerlink" title="视图-view"></a>视图-view</h1><blockquote>
+<p>我们使用create命令来构建database,user,<strong>table(基本单位)</strong>,view,索引,函数,存储过程,触发器 - 数据库的单位.</p>
+<p>视图实际上就是一张”虚拟表”,实际上是不存在的.只是逻辑上的查询结果的集合.</p>
+</blockquote>
+<h2 id="视图的分类"><a href="#视图的分类" class="headerlink" title="视图的分类"></a>视图的分类</h2><blockquote>
+<ol>
+<li><p>简单视图</p>
+<p>视图来自于单表查询的集合 - 允许执行DML操作</p>
+</li>
+<li><p>复杂视图</p>
+<p>视图来自于多表关联查询的集合 - 不一定允许执行DML操作.</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="创建的语法"><a href="#创建的语法" class="headerlink" title="创建的语法"></a>创建的语法</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DROP view 视图名;</span><br><span class="line"></span><br><span class="line">CREATE VIEW 视图名</span><br><span class="line">AS</span><br><span class="line">SELECT查询语句;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create view t_acc_view as select * from t_acc;</span><br><span class="line"></span><br><span class="line">select * from t_acc_view;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>复杂视图</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">drop view co_view;</span><br><span class="line">create view co_view as</span><br><span class="line">select c.cname,o.ord_no from t_customer c join t_ord o on c.id = o.customer_id;</span><br><span class="line"></span><br><span class="line">update co_view set cname='xx'; //允许update</span><br><span class="line"></span><br><span class="line">drop view co_view;</span><br><span class="line">create view co_view as</span><br><span class="line">select customer_id,count(*) c_ from t_ord group by customer_id;</span><br><span class="line"></span><br><span class="line">-- 不允许执行update操作.</span><br><span class="line">mysql&gt; update co_view set c_=1;</span><br><span class="line">ERROR 1288 (HY000): The target table co_view of the UPDATE is not updatable</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><blockquote>
+<ol>
+<li><p>修改原表,视图肯定变化.有可能还会导致视图数据全部丢失.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">select * from t_acc where balance=16000;</span><br><span class="line"></span><br><span class="line">-- 更新原表</span><br><span class="line"></span><br><span class="line">-- 更新了这个视图来源的那个条件列.</span><br><span class="line">update t_acc set balance = balance+1000 where id=2;</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t_acc_view;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>修改视图 - 同样也会对原表造成影响.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">select * from t_acc where id=1;</span><br><span class="line"></span><br><span class="line">-- 更新视图</span><br><span class="line">update t_acc_view set balance=1000 where id=1;</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t_acc;</span><br><span class="line">+------+----------+</span><br><span class="line">| id   | balance  |</span><br><span class="line">+------+----------+</span><br><span class="line">|    1 |  1000.00 |</span><br><span class="line">|    2 | 17000.00 |</span><br><span class="line">|    3 | 15000.00 |</span><br><span class="line">+------+----------+</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>针对题1的情况,更新列可能导致视图失效.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">SELECT带where的条件查询语句 with check option</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>with check option作用:不允许更新视图的来源的那个条件列.  肯定是要配合where语句一起使用的,否则没有任何意义</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">drop view t_acc_view;</span><br><span class="line">create view t_acc_view</span><br><span class="line">as</span><br><span class="line">select * from t_acc where balance=1000 with check option;</span><br><span class="line"></span><br><span class="line">mysql&gt; update t_acc_view set balance=2000 where id=1;</span><br><span class="line">ERROR 1369 (HY000): CHECK OPTION failed 'dy.t_acc_view'</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+<h2 id="视图的好处"><a href="#视图的好处" class="headerlink" title="视图的好处"></a>视图的好处</h2><blockquote>
+<ol>
+<li><p>封装SQL语句</p>
+<p>封装比较复杂的SQL语句,在Java中直接查询视图即可.</p>
+</li>
+<li><p>定制数据</p>
+<p>系统不同的角色 - 看到的数据应该是不一样的.</p>
+</li>
+<li><p>安全性</p>
+<p>数据库应该有多个user账号的,可以给不同的用户授予不同的视图的权限(select,insert,update,delete)</p>
+<p>授权grant</p>
+</li>
+<li><p>合并抽离出去的数据 - 对用户屏蔽的底层的数据库的结构的设计.</p>
+</li>
+</ol>
+</blockquote>
+<h1 id="索引-index"><a href="#索引-index" class="headerlink" title="索引-index"></a>索引-index</h1><blockquote>
+<p>作用:提高查询的效率,类似于书的那个目录.</p>
+</blockquote>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<ol>
+<li><p>Myisam存储引擎</p>
+<p>索引文件和数据文件是分开存储的.是俩个独立的文件</p>
+<p>数据结构:B+树</p>
+</li>
+<li><p>Innodb存储引擎</p>
+<p>数据和索引是合二为一的,是一个文件.</p>
+<p>B+树</p>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<ul>
+<li>索引也是占用物理空间的.</li>
+<li>对表中的数据进行DML操作的时候,维护索引的-消耗一点额外的时间</li>
+<li>如果表中某列重复的数据比较多,没有必要创建索引 - 查找的时候接近于全表扫描花费的时间.</li>
+<li>当表中没有指定索引列,那么默认的索引列就是主键列.</li>
+<li>show index from 表名 \G;</li>
+</ul>
+</blockquote>
+<h2 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h2><blockquote>
+<ul>
+<li><p>主键索引</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Key_name: PRIMARY</span><br><span class="line"></span><br><span class="line">-- 非要删除主键约束</span><br><span class="line">alter table 表名 drop primary key;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>唯一索引</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">某列增加unique唯一约束,自动创建唯一索引</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>全文索引</p>
+<p>后期会使用elasticsearch来进行全文搜索 - 搜索引擎.</p>
+</li>
+<li><p>复合索引 - 遵守最左匹配原则.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create index index_name on 表名(列1,列2,列3);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>普通索引</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create index index_name on 表名(列);</span><br><span class="line">drop index index_name;</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</blockquote>
+<h1 id="索引失效场景※"><a href="#索引失效场景※" class="headerlink" title="索引失效场景※"></a>索引失效场景※</h1><blockquote>
+<p>如何查看索引是否生效 - 索引执行计划explain select语句;</p>
+<p>type - <em>const</em>&gt;eq_<em>ref</em>&gt;<em>ref</em>&gt;range&gt;index&gt;<em>all</em>)</p>
+<p>type-all 全表扫描 - 索引是失效的.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">explain select * from index_test where id=1;</span><br><span class="line">+----+-------------+------------+------------+-------+---------------+---------+---------+-------+------+----------+-------+</span><br><span class="line">| id | select_type | table      | partitions | type  | possible_keys | key     | key_len | ref   | rows | filtered | Extra |</span><br><span class="line">+----+-------------+------------+------------+-------+---------------+---------+---------+-------+------+----------+-------+</span><br><span class="line">|  1 | SIMPLE      | index_test | NULL       | const | PRIMARY       | PRIMARY | 4       | const |    1 |   100.00 | NULL  |</span><br><span class="line">+----+-------------+------------+------------+-------+---------------+---------+---------+-------+------+----------+-------+</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">drop table index_test;</span><br><span class="line">create table index_test(</span><br><span class="line">	id int(7) primary key,</span><br><span class="line">  a int(7),</span><br><span class="line">  b int(7),</span><br><span class="line">  c varchar(20),</span><br><span class="line">  d varchar(20)</span><br><span class="line">);</span><br><span class="line">insert into index_test values(1,100,10,'aaa','AAA');</span><br><span class="line">insert into index_test values(2,200,30,'aab','BBB');</span><br><span class="line">insert into index_test values(3,300,20,'caa','CCC');</span><br><span class="line">insert into index_test values(4,100,10,'daa','DDD');</span><br><span class="line">insert into index_test values(5,500,50,'aad','FFF');</span><br><span class="line"></span><br><span class="line">drop index index_test_index;</span><br><span class="line">create index index_test_index on index_test(a,b,c);</span><br><span class="line"></span><br><span class="line">create index index_test_d on index_test(d(10));//10 - 索引长度</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="1-复合索引需要遵守最左匹配原则"><a href="#1-复合索引需要遵守最左匹配原则" class="headerlink" title="1. 复合索引需要遵守最左匹配原则"></a>1. 复合索引需要遵守最左匹配原则</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">-- a,b,c都是走了索引的.</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c='aaa';</span><br><span class="line"></span><br><span class="line">type:ref   key_len: 73</span><br><span class="line"></span><br><span class="line">-- a走了索引</span><br><span class="line">explain select * from index_test where a = 2;</span><br><span class="line">type: ref  key_len:5</span><br><span class="line"></span><br><span class="line">-- a,b都是走了索引</span><br><span class="line">explain select * from index_test where a = 2 and b=200;</span><br><span class="line">type:ref key_len:10</span><br><span class="line"></span><br><span class="line">-- b是不走的</span><br><span class="line">explain select * from index_test where b=200;</span><br><span class="line">type:ALL key_len:NULL</span><br><span class="line"></span><br><span class="line">-- type:ref   key_len: 73</span><br><span class="line">-- mysql底层发现where条件列a,b,c都是复合索引,先进行优化,a,b,c,进行查询.</span><br><span class="line">explain select * from index_test where b=200 and c='aaa' and a=2;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="2-模糊匹配"><a href="#2-模糊匹配" class="headerlink" title="2. 模糊匹配"></a>2. 模糊匹配</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- %在末尾 - 生效</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c like 'a%';</span><br><span class="line"></span><br><span class="line">-- %在开头,a,b是走索引,但是c没有走索引</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c like '%a';</span><br><span class="line"></span><br><span class="line">-- %?%,a,b是走索引,但是c没有走索引</span><br><span class="line">explain select * from index_test where a = 2 and b=200 and c like '%a%';</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="3-查询范围之后"><a href="#3-查询范围之后" class="headerlink" title="3. 查询范围之后"></a>3. 查询范围之后</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- b&gt;=10 条件成立,范围之后的索引是生效的.  a,b,c都是走索引</span><br><span class="line">explain select * from index_test where a = 100 and b&gt;=10 and c='aaa';</span><br><span class="line"></span><br><span class="line">-- b&gt;10 条件不成立,范围之后的索引是失效的.  只有a,b是走索引的</span><br><span class="line">explain select * from index_test where a = 100 and b&gt;10 and c='aaa';</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="4-索引列参加了计算"><a href="#4-索引列参加了计算" class="headerlink" title="4. 索引列参加了计算"></a>4. 索引列参加了计算</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- type:ALL</span><br><span class="line">explain select * from index_test where id+1=1;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="5-索引列使用了函数"><a href="#5-索引列使用了函数" class="headerlink" title="5. 索引列使用了函数"></a>5. 索引列使用了函数</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- type:ALL</span><br><span class="line">explain select * from index_test where abs(id)=1;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="6-查询的数据超过整张表的30"><a href="#6-查询的数据超过整张表的30" class="headerlink" title="6. 查询的数据超过整张表的30%"></a>6. 查询的数据超过整张表的30%</h2><h2 id="7-is-null和is-not-null"><a href="#7-is-null和is-not-null" class="headerlink" title="7. is null和is not null"></a>7. is null和is not null</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create index emp_index on s_emp(commission_pct);</span><br><span class="line"></span><br><span class="line">-- typ:ALL is null 没有走索引</span><br><span class="line">explain select * from s_emp where commission_pct is null;</span><br><span class="line"></span><br><span class="line">-- type:range is not 走索引.</span><br><span class="line">explain select * from s_emp where commission_pct is not null;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="8-in和not-in"><a href="#8-in和not-in" class="headerlink" title="8. in和not in"></a>8. in和not in</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">explain select * from s_emp where id in(1,2,3);</span><br><span class="line">explain select * from s_emp where id not in(1,2,3);</span><br><span class="line"></span><br><span class="line">-- mysql5.7之前</span><br><span class="line">in - 走索引</span><br><span class="line">not in - 不走索引</span><br><span class="line"></span><br><span class="line">-- 8.x not in允许走索引</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="关于索引的长度key-len"><a href="#关于索引的长度key-len" class="headerlink" title="关于索引的长度key_len"></a>关于索引的长度key_len</h1><h2 id="计算方式"><a href="#计算方式" class="headerlink" title="计算方式"></a>计算方式</h2><blockquote>
+<ol>
+<li><p>数值类型 - int</p>
+<p>4 + 1(该列是否为null,没有设置not null,就需要加1,存储null也占1个)</p>
+</li>
+<li><p>字符串类型 - varchar(n) - utf8 - n*3+2+1(没有设置not null,就需要加1,存储null也占1个)</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="索引长度作用"><a href="#索引长度作用" class="headerlink" title="索引长度作用"></a>索引长度作用</h2><blockquote>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">site: www.baidu.com</span><br><span class="line">   www.baobao.com</span><br><span class="line">   www.baxy.com</span><br><span class="line">   </span><br><span class="line">site索引长度是5,不够,前缀重复比较多.</span><br><span class="line">索引长度要有区分度.</span><br><span class="line"></span><br><span class="line">推荐反转之后进行存储.减少索引长度.</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
+<h1 id="索引的创建策略"><a href="#索引的创建策略" class="headerlink" title="索引的创建策略"></a>索引的创建策略</h1><blockquote>
+<ul>
+<li><p>哪些列创建索引</p>
+<ul>
+<li><p>主键列,唯一性列</p>
+</li>
+<li><p>重复性比较少,经常被查询但是同时更新不是特别频繁的列.</p>
+</li>
+<li><p>order by + 排序列 - 创建索引.</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">order by语句本身性能就很低下的.  根据索引进行排序.</span><br><span class="line">如果是id列索引,插入的时候就会先排序了.</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>join on 列</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用来连接表的列适合建索引的.本身join越多,性能越低.</span><br><span class="line">开发中几乎都是单表查询.尽量不要去使用复杂查询.</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</li>
+<li><p>不适合创建索引</p>
+<ul>
+<li>null值太多的列</li>
+<li>重复值太多的列</li>
+<li>更新比较频繁的列</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><blockquote>
+<ol>
+<li><p>行锁</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update s_emp set first_name='xxx' where id=1;//条件列是索引列 - 行锁 - 降低锁的粒度</span><br><span class="line"></span><br><span class="line">行锁和表锁</span><br><span class="line">1. 行锁粒度小,涉及到频繁的加锁和释放锁的过程.</span><br><span class="line">3. 表锁会影响到查询效率</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">update s_emp set first_name='xxx' where id=1;//如果上面的事务没有commit,此处会阻塞</span><br><span class="line"></span><br><span class="line">如果此处更新的是另外一行,可以直接执行update s_emp set first_name='xxx' where id=2;</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>表锁</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">非索引列条件更新的时候 - 锁表.</span><br><span class="line">所有的DML操作默认的申请表锁</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>页锁</p>
+<p>介于行锁和表锁之间的.</p>
+</li>
+<li><p>共享锁</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">select语句默认申请的共享锁.</span><br><span class="line">select申请排他锁.</span><br><span class="line"></span><br><span class="line">select语句 for update;</span><br><span class="line"></span><br><span class="line">实现悲观锁</span><br><span class="line"></span><br><span class="line">更新库存stock</span><br><span class="line"></span><br><span class="line">伪代码:</span><br><span class="line"></span><br><span class="line">begin;</span><br><span class="line"></span><br><span class="line">select stock from xxx where id=1 for update;</span><br><span class="line"></span><br><span class="line">//更新stock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">commit;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/view/" rel="tag">view</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+      
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-mysql1" class="article article-type-post" itemscope itemprop="blogPost">
   
